@@ -5,7 +5,7 @@
             <h4>Billing Details</h4>
             <form action="index.php?act=checkout" method="post">
                 <!-- <input type="hidden" name="id-cart" value=""> -->
-        
+
                 <div class="row">
                     <div class="col-lg-8 col-md-6">
                         <div class="checkout__input">
@@ -34,7 +34,7 @@
 
                         <div class="checkout__input__checkbox">
                             <label for="pay-on-delivery">
-                                <input type="radio" id="pay-on-delivery" value="tienmat" name="payment-method" checked>
+                                <input type="radio" id="pay-on-delivery" value="tienmat" name="payment-method">
                                 Thanh toán khi nhận hàng
                             </label>
 
@@ -54,14 +54,14 @@
                                 <?php
                                 $tong = 0;
                                 $subtotal = 0;
-                                foreach ($data as $key => $value) {
+                                foreach ($_SESSION['order'] as $key => $value) {
                                     $total = ($value['price'] - $value['price_saleoff']) * $value['amount'];
 
                                     $subtotal += $total;
                                 ?>
-                                    <li style="display: flex; justify-content:space-between;padding-top:5px;"><img width="70px" src="./upload/<?= $value['img'] ?>" alt=""><?= $value['name'] ?> <span><?= '$' . number_format($total, 2, '.', ',') ?></span></li>
-                                    <input type="hidden" name="id_cart" value="<?= $_POST['product_carts'][$key] ?>">
-                                    <input type="hidden" name="subtotal" value="<?= $subtotal ?>">
+                                    <li style="display: flex; justify-content:space-between;padding-top:5px;"><img width="70px" src="./upload/<?= $value['img'] ?>" alt=""><?= $value['name'] ?> <span><?= number_format($total, 3, '.', ',') . 'VNĐ' ?></span></li>
+                                    <input type="hidden" name="id_cart[]" value="<?= $_POST['product_carts'][$key] ?>">
+                                    <input type="hidden" name="subtotal" value="<?= number_format($subtotal, 3, '.', ',') . 'VNĐ' ?>">
                                     <!-- <li>Fresh Vegetable <span>$151.99</span></li>
                                     <li>Organic Bananas <span>$53.99</span></li> -->
 
@@ -72,8 +72,8 @@
                                 ?>
                             </ul>
 
-                            <div class="checkout__order__subtotal">Subtotal <span><?= '$' . number_format($subtotal, 2, '.', ',')  ?></span></div>
-                            <div class="checkout__order__total">Total <span><?= '$' . number_format($subtotal, 2, '.', ',') ?></span></div>
+                            <div class="checkout__order__subtotal">Subtotal <span><?= number_format($subtotal, 3, '.', ',') . 'VNĐ'  ?></span></div>
+                            <div class="checkout__order__total">Total <span><?= number_format($subtotal, 3, '.', ',') . 'VNĐ' ?></span></div>
                             <button name="thanhtoan" type="submit" class="site-btn">PLACE ORDER</button>
                         </div>
                     </div>

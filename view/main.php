@@ -61,7 +61,7 @@
          
             <div class="featured__item__text">
                 <h6><a href="index.php?act=chitietsanpham&id=<?= $id ?>"><?= $name ?></a></h6>
-                <h5>$<?= number_format($price1, 2, '.', ','); ?></h5>
+                <h5>$<?= number_format($price1, 2, '.', ',').'VNĐ'; ?></h5>
             </div>
         </div>
     
@@ -116,13 +116,12 @@
                                     echo '
                                     <a href="index.php?act=chitietsanpham&id='.$id.'">
                 <div class="latest-product__item">
-             
                     <div class="latest-product__item__pic">
                         <img src="../duan2/upload/' . $img . '" alt="">
                     </div>
                     <div class="latest-product__item__text">
                         <h6>' . $name . '</h6>
-                        <span>$' . $price1 . '.00</span>
+                        <span>' . number_format($price1, 3, '.', ',') . 'VNĐ</span>
                     </div>
                 </div>
                 </a>
@@ -156,7 +155,7 @@
                     </div>
                     <div class="latest-product__item__text">
                         <h6>' . $name . '</h6>
-                        <span>$' . $price1 . '.00</span>
+                        <span>' . number_format($price1, 3, '.', ',') . 'VNĐ</span>
                     </div>
                 </div>
                 </a>
@@ -191,7 +190,7 @@
                     </div>
                     <div class="latest-product__item__text">
                         <h6>' . $name . '</h6>
-                        <span>$' .number_format($price1, 2, '.', ','). '</span>
+                        <span>' . number_format($price1, 3, '.', ',') . 'VNĐ</span>
                     </div>
                 </div>
                 </a>

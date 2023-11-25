@@ -1,7 +1,9 @@
 <?php
 function insert_hoadon($iduser,$ma_don_hang,$nguoinhan,$phone_nguoinhan,$diachi_nguoinhan,$phuongthuc_thanhtoan,$id_trangthai = 1){
-    $sql = "INSERT INTO duan1.donhang(iduser,ma_don_hang,nguoinhan,phone_nguoinhan,diachi_nguoinhan,phuongthuc_thanhtoan,trangthai) values('$iduser','$ma_don_hang','$nguoinhan','$phone_nguoinhan','$diachi_nguoinhan','$phuongthuc_thanhtoan','$id_trangthai = 1')";
-    pdo_execute($sql);
+    $sql = "INSERT INTO duan1.donhang(iduser,ma_don_hang,nguoinhan,phone_nguoinhan,diachi_nguoinhan,phuongthuc_thanhtoan,trangthai) 
+    values
+    ('$iduser','$ma_don_hang','$nguoinhan','$phone_nguoinhan','$diachi_nguoinhan','$phuongthuc_thanhtoan','$id_trangthai = 1')";
+    return pdo_execute_returnLastInsertId($sql);
 }
 
 function insert_chitiet_donhang($id_hoadon,$id_pro,$amount,$price){

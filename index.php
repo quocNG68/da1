@@ -261,6 +261,7 @@ if (isset($_GET['act'])) {
             }
             break;
         case 'list_cart':
+
             if (isset($_SESSION['success_login'])) {
                 $load_all_cart = load_all_cart($iduser);
 
@@ -284,18 +285,12 @@ if (isset($_GET['act'])) {
                 header('location:' . $_SERVER['HTTP_REFERER']);
             }
             break;
-            // case 'gioithieu':
-            //     include 'view/gioithieu.php';
-            //     break;
-            // case 'sanpham':
-            //     include 'view/sanpham.php';
-            //     break;
         case 'cuahang':
 
             $start = '';
             $end = '';
             $sorting = '';
-            // $keyword = '';
+            $keyword = '';
             $iddm = '';
 
             if (isset($_GET['start']) || isset($_GET['end'])) {
@@ -343,52 +338,35 @@ if (isset($_GET['act'])) {
             include 'view/cuahang.php';
             break;
         case 'checkout':
-            // echo  "<pre>";
-            // print_r($_POST);
-            // echo "</pre>";
-            // lấy dữ liệu vào checkout
-            if (isset($_POST['muahang'])) {
 
+            // $_SESSION['cart'] = $_POST;
+            // print_r($_SESSION['cart']);
+            // exit;
+
+            if (isset($_POST['muahang'])) {
                 $data = [];
                 foreach ($_POST['product_carts'] as $cart) {
                     $data[] = list_cart__bill($cart);
-                };
-
+                }
                 $_SESSION['order'] = $data;
             }
 
-
-
-
-            // foreach($_SESSION['order'] as $value1){
-            //     echo "<pre>";
-            //     var_dump($value1);
-            //     echo "</pre>";
-
-            // }
+            $_SESSION['cart'] = $_POST;
 
             if (isset($_POST['thanhtoan'])) {
 
+                // print_r($_POST);
+                // exit;
 
-                $diachi_nguoinhan = $_POST['address'];
-                $phone_nguoinhan = $_POST['phone'];
-                $phuongthuc_thanhtoan = $_POST['payment-method'];
-                $nguoinhan = $_POST['nguoinhan'];
-             
-                if (isset($_POST['payment-method']) && $_POST['payment-method'] == 'tienmat') {
-                    // $id_pro = $_POST;
-                    //    echo $id_pro;
-                    //    exit;
+                $_SESSION['pt_thanhtoan'] = $_POST['payment-method'];
 
-                    $ma_don_hang = generateOrderCode();
-                    insert_hoadon($iduser, $ma_don_hang, $nguoinhan, $phone_nguoinhan, $diachi_nguoinhan, $phuongthuc_thanhtoan,$id_thanhtoan = 1);
-                    $id_hoadon = $conn->lastInsertId();
-                    foreach ($_SESSION['order'] as $value) {
-                        insert_chitiet_donhang($id_hoadon, $value['idpro'], $value['amount'], $value['price']);
-                        del_cart_after_order($value['idcart']);
-                        header("location: index.php?act=camon");
+                if (isset($_POST['payment-method']) && $_POST['payment-method'] == 'online') {
+
+                    $tongtien = 0;
+                    foreach ($_SESSION['order'] as $key => $value) {
+                        $thanhtien = $value['amount'] * ($value['price'] - $value['price_saleoff']);
+                        $tongtien = $tongtien + $thanhtien;
                     }
-                } else {
 
                     error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
                     date_default_timezone_set('Asia/Ho_Chi_Minh');
@@ -401,7 +379,7 @@ if (isset($_GET['act'])) {
                     $vnp_TxnRef = rand(00, 9999); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
                     $vnp_OrderInfo = 'Noi dung thanh toan';
                     $vnp_OrderType = 'billpayment';
-                    $vnp_Amount = 10000 * 100;
+                    $vnp_Amount = $tongtien * 100000;
                     $vnp_Locale = 'vn';
                     $vnp_BankCode = 'NCB';
                     $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
@@ -424,49 +402,126 @@ if (isset($_GET['act'])) {
                     if (isset($vnp_BankCode) && $vnp_BankCode != "") {
                         $inputData['vnp_BankCode'] = $vnp_BankCode;
                     }
-                    // if (isset($vnp_Bill_State) && $vnp_Bill_State != "") {
-                    //     $inputData['vnp_Bill_State'] = $vnp_Bill_State;
-                    // }
 
-                    //var_dump($inputData);
                     ksort($inputData);
-                    $query = "";
-                    $i = 0;
-                    $hashdata = "";
-                    foreach ($inputData as $key => $value) {
-                        if ($i == 1) {
-                            $hashdata .= '&' . urlencode($key) . "=" . urlencode($value);
-                        } else {
-                            $hashdata .= urlencode($key) . "=" . urlencode($value);
-                            $i = 1;
-                        }
-                        $query .= urlencode($key) . "=" . urlencode($value) . '&';
-                    }
+                    $query = http_build_query($inputData);
 
                     $vnp_Url = $vnp_Url . "?" . $query;
                     if (isset($vnp_HashSecret)) {
-                        $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnp_HashSecret); //  
-                        $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
+                        $vnpSecureHash =   hash_hmac('sha512', $query, $vnp_HashSecret);
+                        $vnp_Url .= '&vnp_SecureHash=' . $vnpSecureHash;
                     }
+
                     $returnData = array(
                         'code' => '00', 'message' => 'success', 'data' => $vnp_Url
                     );
-                    if ((isset($_POST['payment-method']) && $_POST['payment-method'] == 'online')) {
+                    if (isset($_POST['thanhtoan']) && isset($_POST['payment-method']) == 'online') {
                         header('Location: ' . $vnp_Url);
                         die();
                     } else {
                         echo json_encode($returnData);
+                        die();
                     }
+                } else {
+                    $tongtien = 0;
+                    foreach ($_SESSION['order'] as $key => $value) {
+                        $thanhtien = $value['amount'] * ($value['price'] - $value['price_saleoff']);
+                        $tongtien = $tongtien + $thanhtien;
+                    }
+                    header('Location: index.php?act=camon');
                 }
             }
             include "view/order/checkout.php";
             break;
 
-        case 'lienhe':
-            include 'view/lienhe.php';
-            break;
-        case 'camon':
-            include 'view/camon.php';
+        case "camon":
+            if ($_SESSION['pt_thanhtoan'] == 'online') {
+                if (isset($_GET["vnp_Amount"]) && $_GET['vnp_ResponseCode'] == '00') {
+
+                    // Get the current date and time in Asia/Ho_Chi_Minh timezone
+                    date_default_timezone_set('Asia/Ho_Chi_Minh');
+                    $ngaymua = date("Y-m-d H:i:s");
+
+                    // Check if user ID is set
+                    if (isset($iduser)) {
+                        // Generate a unique order code
+                        $ma_don_hang = generateOrderCode();
+                        $loai_thanhtoan = 'vnpay';
+                        // Set payment method to 'VNPAY'
+
+                        $data = [];
+
+                        // Retrieve cart details for each product
+                        foreach ($_SESSION['cart']['id_cart'] as $cart) {
+                            $data[] = list_cart__bill($cart);
+                            del_cart_after_order($cart);
+                        }
+
+                        // Insert order details into the database
+                        $id_hoadon = insert_hoadon(
+                            $iduser,
+                            $ma_don_hang,
+                            $_SESSION['cart']['nguoinhan'],
+                            $_SESSION['cart']['phone'],
+                            $_SESSION['cart']['address'],
+                            $loai_thanhtoan,
+                            $id_trangthai = 1
+                        );
+                        // insert vào bảng chi tiết đơn hàng
+
+                        foreach ($data as $value) {
+                            extract($value);
+                            insert_chitiet_donhang($id_hoadon, $idpro, $amount, $price);
+                           
+                        }
+
+                        // các điều kiện liên quan đến vnpay
+                        $vnp_BankCode = $_GET["vnp_BankCode"];
+                        $vnp_BankTranNo = $_GET["vnp_BankTranNo"];
+                        $vnp_CardType = $_GET["vnp_CardType"];
+                        $vnp_OrderInfo = $_GET["vnp_OrderInfo"];
+                        $vnp_PayDate = $_GET["vnp_PayDate"];
+                        $vnp_TmnCode = $_GET["vnp_TmnCode"];
+                        $vnp_TransactionNo = $_GET["vnp_TransactionNo"];
+                        include "view/camon.php";
+                    }
+                } else {
+                    // thông báo nếu không thanh toán thành công
+                    echo "<script>alert('Đã hủy thanh toán');</script>";
+                    echo '<script>window.location.href = "index.php?action=checkout";</script>';
+                    die();
+                }
+            } else {
+                $data = [];
+
+                foreach ($_SESSION['cart']['id_cart'] as $cart) {
+                    $data[] = list_cart__bill($cart);
+                    del_cart_after_order($cart);
+                }
+                $ma_don_hang = generateOrderCode();
+                $loai_thanhtoan = 'tienmat';
+                $id_hoadon = insert_hoadon(
+                    $iduser,
+                    $ma_don_hang,
+                    $_SESSION['cart']['nguoinhan'],
+                    $_SESSION['cart']['phone'],
+                    $_SESSION['cart']['address'],
+                    $loai_thanhtoan,
+                    $id_trangthai = 1
+                );
+
+
+                foreach ($data as $value) {
+                    extract($value);
+                    insert_chitiet_donhang($id_hoadon, $idpro, $amount, $price);
+                }
+
+
+
+
+                include "view/camon.php";
+            }
+
             break;
 
         default:

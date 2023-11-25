@@ -53,20 +53,20 @@
                                                 <h5><?= $name ?></h5>
                                             </td>
                                             <td class="shoping__cart__price">
-                                                <?= number_format($price1, 2, '.', ',') ?>
-                                                <span style="text-decoration: line-through;font-weight:400;font-size:14px;"><?= '$' . number_format($price, 2, '.', ',') ?></span>
+                                                <?= number_format($price1, 3, '.', ',').'VNĐ' ?>
+                                                <span style="text-decoration: line-through;font-weight:400;font-size:14px;"><?= number_format($price, 3, '.', ',').'VNĐ' ?></span>
                                             </td>
                                             <td class="shoping__cart__quantity">
                                                 <div class="quantity">
                                                     <div class="pro-qty">
-                                                        <span onclick="updateTotal('<?= $id ?>', '<?= number_format($price1, 2, '.', ',') ?>', this)">+</span>
+                                                        <span onclick="updateTotal('<?= $id ?>', '<?= number_format($price1, 3, '.', ',').'VNĐ' ?>', this)">+</span>
                                                         <input type="text" value="<?= $amount ?>" min="1" class="qty-input" data-id="<?= $id ?>" disabled>
-                                                        <span onclick="updateTotal('<?= $id ?>', '-<?= number_format($price1, 2, '.', ',') ?>', this)">-</span>
+                                                        <span onclick="updateTotal('<?= $id ?>', '-<?= number_format($price1, 3, '.', ',').'VNĐ' ?>', this)">-</span>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td class="shoping__cart__total">
-                                                <?= '$' . number_format($product_total, 2, '.', ',') ?>
+                                                <?= number_format($product_total, 3, '.', ',').'VNĐ' ?>
                                             </td>
                                             <td class="shoping__cart__item__close">
                                                 <a href="index.php?act=delete_cart&id=<?= $value['id'] ?>"> <span class="icon_close"></span></a>
@@ -163,8 +163,8 @@
             }
         }
         const total = subtotal;
-        subtotalElement.innerText = '$' + subtotal.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-        totalElement.innerText = '$' + total.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        subtotalElement.innerText = subtotal.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+'VNĐ';
+        totalElement.innerText = total.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+'VNĐ';
     }
 
     for (let i = 0; i < checkbox.length; i++) {

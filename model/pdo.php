@@ -13,6 +13,8 @@ function pdo_get_connection(){
         echo "Connection failed: " . $e->getMessage();
     }
 }
+
+
 function pdo_execute($sql){
     $sql_args=array_slice(func_get_args(),1);
     try{
@@ -64,7 +66,7 @@ function pdo_query_one($sql){
         unset($conn);
     }
 }
-pdo_get_connection();
+
 
 
 function pdo_execute_returnLastInsertId($sql){
@@ -82,4 +84,6 @@ function pdo_execute_returnLastInsertId($sql){
         unset($conn);
     }
 }
+
+pdo_get_connection();
 ?>

@@ -69,7 +69,7 @@
                                             </div>
                                             <div class="latest-product__item__text">
                                                 <h6>' . $name . '</h6>
-                                                <span>$' . number_format($price1, 2, '.', ',') . '</span>
+                                                <span>' . number_format($price1, 0, '.', ',') . 'VNĐ</span>
                                             </div>
                                         </div>
                                         </a>
@@ -111,7 +111,7 @@
                                                <div class="product__discount__item__text">
                                                    <span><?= $tendanhmuc ?></span>
                                                    <h5><a href="index.php?act=chitietsanpham&id=<?= $id ?>"><?= $name ?></a></h5>
-                                                   <div class="product__item__price"><?= '$' . number_format($price1, 2, '.', ',') ?> <span><?= '$' . number_format($price, 2, '.', ',') ?></span></div>
+                                                   <div class="product__item__price"><?=  number_format($price1, 0, '.', ',').'VNĐ' ?> <span><?= number_format($price, 0, '.', ',').'VNĐ' ?></span></div>
                                                </div>
                                            </div>
                                        </div>
@@ -206,7 +206,7 @@
                                        </div>
                                        <div class="product__item__text">
                                            <h6><a href="index.php?act=chitietsanpham&id=<?= $id ?>"><?= $name ?></a></h6>
-                                           <h5><?= '$' . number_format($price1, 2, '.', ','); ?></h5>
+                                           <h5><?= number_format($price1, 2, '.', ',').'VNĐ'; ?></h5>
                                        </div>
                                    </div>
                                </div>
