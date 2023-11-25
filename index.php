@@ -516,13 +516,12 @@ if (isset($_GET['act'])) {
                     insert_chitiet_donhang($id_hoadon, $idpro, $amount, $price);
                 }
 
-
-
-
                 include "view/camon.php";
             }
 
             break;
+
+      
 
         default:
             include 'view/main.php';

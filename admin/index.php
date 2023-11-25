@@ -7,6 +7,7 @@ include "../model/taikhoan.php";
 include "../model/tinhtrang.php";
 include "../model/sanpham.php";
 include "../model/binhluan.php";
+include "../model/donhang.php";
 include "header.php";
 include "sidebar.php";
 if (isset($_GET['act'])) {
@@ -113,9 +114,8 @@ if (isset($_GET['act'])) {
                 if (empty($_FILES['image_danhmuc']['name'])) {
                     $check = false;
                     $err_imagedm = 'Không được để trống';
-                }
-                  else{
-                  if($_FILES['image_danhmuc']['size'] > 1000000) {
+                } else {
+                    if ($_FILES['image_danhmuc']['size'] > 1000000) {
                         $check = false;
                         $err_imagedm = 'Ảnh quá kích cỡ';
                     } else {
@@ -129,9 +129,9 @@ if (isset($_GET['act'])) {
                             echo "Failed to upload image.";
                         }
                     }
-                    }
                 }
-              
+            }
+
             include 'danhmuc/adddm.php';
             break;
 
@@ -557,6 +557,48 @@ if (isset($_GET['act'])) {
                 header('location:' . $_SERVER['HTTP_REFERER']);
             }
             break;
+
+        case 'trangthai_donhang':
+
+            $load_all_trangthai_donhang = load_all_trangthai_donhang();
+            $load_all_donhang_admin = load_all_donhang_admin();
+            include "donhang/trangthai_donhang.php";
+            break;
+        case 'chitiet_donhang':
+            if (isset($_GET['id_order'])) {
+                $id_order = $_GET['id_order'];
+                $load_chitiet_donhang_admin = load_chitiet_donhang_admin($id_order);
+            }
+            include "donhang/chitiet_donhang.php";
+            break;
+        case 'edit_trangthai_donhang':
+            if (isset($_GET['id_order'])) {
+                $id_order = $_GET['id_order'];
+                $load_one_trangthai = load_one_trangthai($id_order);
+            }
+            $load_all_trangthai_donhang = load_all_trangthai_donhang();
+            include "donhang/edit_trangthai_donhang.php";
+            break;
+        case 'update_trangthai_donhang':
+            if (isset($_POST['update_trangthai_donhang'])) {
+                $id_trangthai_donhang = $_POST['id_trangthai_donhang'];
+                $id_order = $_POST['id_order'];
+                update_trangthai_donhang($id_order, $id_trangthai_donhang);
+                header("location: index.php?act=trangthai_donhang");
+            }
+            break;
+        case 'donhang_thanhcong':
+            $load_all_donhang_thanhcong = load_all_donhang_thanhcong();
+            include "donhang/donhang_thanhcong.php";
+            break;
+        case 'chitiet_donhang_thanhcong':
+            if (isset($_GET['id_order'])) {
+                $id_order = $_GET['id_order'];
+                $load_chitiet_donhang_thanhcong = load_chitiet_donhang_thanhcong($id_order);
+            }
+            include "donhang/chitiet_donhang_thanhcong.php";
+            break;
+
         default:
             include "home.php";
             break;
