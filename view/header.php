@@ -63,7 +63,7 @@
 
                     if ($user_infor['role'] == 1) {
                     ?>
-                        <a href="/duan1/admin/index.php"><i class="fa fa-user"></i>Quản lý admin</a>
+                        <a href="/duan2/admin/index.php"><i class="fa fa-user"></i>Quản lý admin</a>
                     <?php
                     }
                 } else {
@@ -161,7 +161,7 @@
 
                                     if ($user_infor['role'] == 1) {
                                     ?>
-                                        <a href="/duan1/admin/index.php"><i class="fa fa-user"></i>Quản lý admin</a>
+                                        <a href="/duan2/admin/index.php"><i class="fa fa-user"></i>Quản lý admin</a>
                                     <?php
                                     }
                                 } else {
@@ -221,7 +221,7 @@
                         <ul>
                             <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
                             <li class="cart-icon-container">
-                                <a href="#"><i class="fa fa-shopping-bag"></i> <span><?= count($load_cart_view_icon) ?></span></a>
+                                <a href="index.php?act=list_cart"><i class="fa fa-shopping-bag"></i> <span><?= count($load_cart_view_icon) ?></span></a>
                                 <i class="fa-solid fa-caret-down"></i>
                                 <div class="cart-dropdown">
                                     <!-- Nội dung giỏ hàng dropdown ở đây -->

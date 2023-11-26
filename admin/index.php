@@ -10,6 +10,10 @@ include "../model/binhluan.php";
 include "../model/donhang.php";
 include "header.php";
 include "sidebar.php";
+if($_SESSION['success_login_admin']['role'] != 1){
+    header("location: erro404.php");
+    die;
+}
 if (isset($_GET['act'])) {
     $act = $_GET['act'];
     switch ($act) {

@@ -22,6 +22,8 @@ $load_sp_giatot = load_sp_giatot();
 // Sử dụng header_home.php nếu đang truy cập trang chủ, ngược lại sử dụng header.php
 $iduser = $_SESSION['success_login'] ?? 0;
 $user_infor = select_user_by_id($iduser);
+$_SESSION['success_login_admin'] = $user_infor;
+
 // $_SESSION['success_login'] = $iduser;
 // print_r($user_infor);
 $load_cart_view_icon = load_cart_view_icon($iduser);
@@ -473,7 +475,6 @@ if (isset($_GET['act'])) {
                         foreach ($data as $value) {
                             extract($value);
                             insert_chitiet_donhang($id_hoadon, $idpro, $amount, $price - $price_saleoff);
-                           
                         }
 
                         // các điều kiện liên quan đến vnpay
@@ -517,9 +518,14 @@ if (isset($_GET['act'])) {
                 include "view/camon.php";
             }
             break;
-            case 'theodoi_donhang':
-                include "view/order/theodoi_donhang.php";
-                break;
+        case 'theodoi_donhang':
+            $load_all_donhang_1 = load_all_donhang_1($iduser);
+            $load_all_donhang_2 = load_all_donhang_2($iduser);
+            $load_all_donhang_3 = load_all_donhang_3($iduser);
+            $load_all_donhang_4 = load_all_donhang_4($iduser);
+            $load_all_donhang = load_all_donhang($iduser);
+            include "view/order/theodoi_donhang.php";
+            break;
         default:
             include 'view/main.php';
             break;

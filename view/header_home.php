@@ -44,7 +44,38 @@
         <div class="humberger__menu__cart">
             <ul>
                 <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                <li class="cart-icon-container">
+                    <a href="index.php?act=list_cart"><i class="fa fa-shopping-bag"></i> <span><?= count($load_cart_view_icon) ?></span></a>
+                    <i class="fa-solid fa-caret-down"></i>
+                    <div class="cart-dropdown">
+                        <!-- Nội dung giỏ hàng dropdown ở đây -->
+
+                        <div class="cart_dropdown_item">
+                            <?php
+                            if (isset($load_cart_view_icon)) {
+                                foreach ($load_cart_view_icon as $value) {
+                                    extract($value);
+                                    $price1 = $price - $price_saleoff;
+                            ?>
+                                    <a href="index.php?act=chitietsanpham&id=<?= $idpro ?>">
+
+                                        <div class="cart_dropdown_item__cart">
+
+                                            <img width="70px" src="./upload/<?= $img ?>" alt="">
+                                            <p class="name"><?= $name ?></p>
+                                            <p class="price"><?= '$' . number_format($price1, 2, '.', ',') ?></p>
+                                        </div>
+                                    </a>
+                            <?php
+                                }
+                            }
+                            ?>
+
+                        </div>
+
+                    </div>
+                </li>
+                <li><a href="index.php?act=theodoi_donhang"><i class="fa-solid fa-rectangle-list"></i></a></li>
             </ul>
             <div class="header__cart__price">item: <span>$150.00</span></div>
         </div>
@@ -63,13 +94,13 @@
                 if (isset($_SESSION['success_login']) && is_array($_SESSION['success_login'])) {
                     extract($_SESSION['success_login']);
                 ?>
-                    <a href="index.php?act=taikhoan"><i class="fa fa-user"></i>Xin chào: <?= $username ?></a>
+                    <a href="index.php?act=taikhoan"><i class="fa fa-user"></i>Xin chào: <?= $user_infor['username'] ?></a>
                     <a href="index.php?act=logout">Đăng xuất</a>
                     <?php
 
-                    if ($role == 1) {
+                    if ($user_infor['role'] == 1) {
                     ?>
-                        <a href="duan1/admin"><i class="fa fa-user"></i>Quản lý admin</a>
+                        <a href="/duan1/admin/index.php"><i class="fa fa-user"></i>Quản lý admin</a>
                     <?php
                     }
                 } else {
@@ -145,7 +176,7 @@
                                 <a href="#"><i class="fa fa-pinterest-p"></i></a>
                             </div>
                             <div class="header__top__right__language">
-                                </img src="/duan1/public/img/language.png" alt="">
+                                </img src="/duan2/public/img/language.png" alt="">
                                 <div>English</div>
                                 <span class="arrow_carrot-down"></span>
                                 <ul>
@@ -156,7 +187,7 @@
                             <div class="header__top__right__auth">
                                 <?php
                                 if (isset($_SESSION['success_login'])) {
-                                
+
                                 ?>
                                     <a href="index.php?act=taikhoan"><i class="fa fa-user"></i>Xin chào: <?= $user_infor['username'] ?></a>
                                     <a href="index.php?act=logout">Đăng xuất</a>
@@ -164,7 +195,7 @@
 
                                     if ($user_infor['role'] == 1) {
                                     ?>
-                                        <a href="/duan1/admin/index.php"><i class="fa fa-user"></i>Quản lý admin</a>
+                                        <a href="/duan2/admin/index.php"><i class="fa fa-user"></i>Quản lý admin</a>
                                     <?php
                                     }
                                 } else {
@@ -218,10 +249,41 @@
                 </div>
                 <div class="col-lg-3">
                     <div class="header__cart">
-                        <ul>
-                            <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
-                        </ul>
+                    <ul>
+                <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
+                <li class="cart-icon-container">
+                    <a href="index.php?act=list_cart"><i class="fa fa-shopping-bag"></i> <span><?= count($load_cart_view_icon) ?></span></a>
+                    <i class="fa-solid fa-caret-down"></i>
+                    <div class="cart-dropdown">
+                        <!-- Nội dung giỏ hàng dropdown ở đây -->
+
+                        <div class="cart_dropdown_item">
+                            <?php
+                            if (isset($load_cart_view_icon)) {
+                                foreach ($load_cart_view_icon as $value) {
+                                    extract($value);
+                                    $price1 = $price - $price_saleoff;
+                            ?>
+                                    <a href="index.php?act=chitietsanpham&id=<?= $idpro ?>">
+
+                                        <div class="cart_dropdown_item__cart">
+
+                                            <img width="70px" src="./upload/<?= $img ?>" alt="">
+                                            <p class="name"><?= $name ?></p>
+                                            <p class="price"><?= '$' . number_format($price1, 2, '.', ',') ?></p>
+                                        </div>
+                                    </a>
+                            <?php
+                                }
+                            }
+                            ?>
+
+                        </div>
+
+                    </div>
+                </li>
+                <li><a href="index.php?act=theodoi_donhang"><i class="fa-solid fa-rectangle-list"></i></a></li>
+            </ul>
                         <div class="header__cart__price">item: <span>$150.00</span></div>
                     </div>
                 </div>
@@ -231,6 +293,97 @@
             </div>
         </div>
     </header>
+    <style>
+        .cart-icon {
+            position: relative;
+        }
+
+        .header__cart ul {
+            position: relative;
+        }
+
+        .fa-caret-down {
+            position: absolute;
+            font-size: 45px;
+            top: 8px;
+            color: black;
+            right: -12px;
+            color: #fff;
+            transform: rotate(180deg);
+        }
+        .cart_dropdown_item a{
+            text-decoration: none;
+        }
+
+        .cart-icon ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        .cart-icon li {
+            margin-right: 20px;
+            position: relative;
+        }
+
+        .cart-icon a {
+            text-decoration: none;
+            color: #333;
+            display: flex;
+            align-items: center;
+        }
+
+        .cart-dropdown {
+            /* left: -62px; */
+            right: -85px;
+            top: 35px;
+            /* left: -170px; */
+            position: absolute;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: none;
+            padding: 5px;
+            min-width: 300px;
+            z-index: 1;
+        }
+
+        .cart-dropdown:hover,
+        .cart-icon-container:hover .cart-dropdown {
+            display: block;
+        }
+
+        .cart_dropdown_item {
+            padding: 5px 0;
+        }
+
+        .cart_dropdown_item__cart:hover {
+            background-color: #f1f1f1;
+        }
+
+        .cart_dropdown_item__cart {
+            display: flex;
+            padding: 5px 0;
+            justify-content: space-between;
+        }
+
+        .cart_dropdown_item__cart p {
+            font-size: 14px;
+        }
+        .cart_dropdown_item__cart p.name{
+            padding-right: 75px;
+        }
+      
+
+        .cart_dropdown_item__cart p.price {
+            color: #7fad39;
+            padding-left: 8px;
+        }
+
+        .cart-icon-container__noi {
+            width: 30px;
+        }
+    </style>
     <!-- Header Section End -->
     <!-- Hero Section Begin -->
     <section class="hero">
@@ -257,8 +410,8 @@
                 <div class="col-lg-9">
                     <div class="hero__search">
                         <div class="hero__search__form">
-                        <form action="index.php?act=cuahang" method="get" onsubmit="return saveSearchKeyword()">
-                            <input type="hidden" id="act" name="act" value="cuahang">
+                            <form action="index.php?act=cuahang" method="get" onsubmit="return saveSearchKeyword()">
+                                <input type="hidden" id="act" name="act" value="cuahang">
                                 <div class="hero__search__categories">
                                     All Categories
                                     <span class="arrow_carrot-down"></span>
@@ -266,7 +419,7 @@
                                 <input type="hidden" name="page" value="<?= isset($_GET['page']) ? $_GET['page'] : 1 ?>">
                                 <input type="text" placeholder="Bạn cần gì ..." name="keyword" id="searchKeyword">
                                 <button type="submit" name="search" class="site-btn">SEARCH</button>
-                                
+
 
                             </form>
                         </div>

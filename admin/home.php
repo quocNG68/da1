@@ -4,7 +4,7 @@
             <div class="col-md-12 grid-margin">
               <div class="row">
                 <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                  <h3 class="font-weight-bold">Chào quốc đẹp trai</h3>
+                  <h3 class="font-weight-bold">Xin chào <?= $_SESSION['success_login_admin']['username']??""  ?></h3>
                   <h6 class="font-weight-normal mb-0">Bạn khỏe không? Chúc bạn một ngày tốt lành</h6>
                 </div>
                 <div class="col-12 col-xl-4">
