@@ -39,16 +39,20 @@
                             <th>Thanh toán</th>
                             <th>Tổng cộng</th>
                             <th>Tình trạng</th>
-                  
+
                         </tr>
                     </thead>
                     <tbody>
 
 
                         <?php
+                        $tongtien = 0;
 
                         if (isset($load_all_donhang_thanhcong)) {
                             foreach ($load_all_donhang_thanhcong as $key => $value) {
+                                // $thanhtien = $value['amount_sp_hoadon'] * $value['price_sp_hoadon'];
+                                // $tongtien = $tongtien+$thanhtien;
+
 
                         ?>
                                 <tr>
@@ -59,15 +63,15 @@
                                     <td><?= $value['phone_nguoinhan'] ?></td>
                                     <td><?= $value['ngaymua'] ?></td>
                                     <td><?= $value['phuongthuc_thanhtoan'] ?></td>
-                                    <td><?= $value['amount_sp_hoadon'] * $value['price_sp_hoadon'] ?></td>
+                                    <td><?= $value['price_sp_hoadon'] ?></td>
                                     <td>
                                         <?= $value['tentrangthai'] ?>
                                     </td>
                                     <td>
-                                    <a href="index.php?act=chitiet_donhang_thanhcong&id_order=<?= $value['id_order'] ?>"><i class="fa-solid fa-calendar-day"></i></a>
+                                        <a href="index.php?act=chitiet_donhang_thanhcong&id_order=<?= $value['id_order'] ?>"><i class="fa-solid fa-calendar-day"></i></a>
                                     </td>
-                                   
-                                   
+
+
                                 </tr>
                         <?php
                             }

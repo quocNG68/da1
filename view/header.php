@@ -251,6 +251,7 @@
 
                                 </div>
                             </li>
+                            <li><a href="index.php?act=theodoi_donhang"><i class="fa-solid fa-rectangle-list"></i></a></li>
                         </ul>
                         <div class="header__cart__price">item: <span>$150.00</span></div>
                     </div>

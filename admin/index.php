@@ -13,6 +13,9 @@ include "sidebar.php";
 if (isset($_GET['act'])) {
     $act = $_GET['act'];
     switch ($act) {
+       case'home':
+        include "home.php";
+        break; 
 
         case 'add_tk':
             if (isset($_POST['add_tk'])) {

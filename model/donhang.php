@@ -32,8 +32,8 @@ function load_all_donhang_admin()
     trangthai_donhang.*,
     chitiet_donhang.*,
     donhang.id as madonhang,
-    chitiet_donhang.amount as amount_sp_hoadon,
-    chitiet_donhang.price as price_sp_hoadon
+    SUM(chitiet_donhang.amount) as amount_sp_hoadon,
+    SUM(chitiet_donhang.price) as price_sp_hoadon
 
      FROM duan1.donhang
     inner join duan1.chitiet_donhang on donhang.id = chitiet_donhang.id_order
@@ -42,25 +42,29 @@ function load_all_donhang_admin()
     $load_all_donhang_admin = pdo_query($sql);
     return $load_all_donhang_admin;
 }
-function load_all_trangthai_donhang(){
+function load_all_trangthai_donhang()
+{
     $sql = "SELECT * FROM duan1.trangthai_donhang";
     $load_all_trangthai_donhang = pdo_query($sql);
     return $load_all_trangthai_donhang;
 }
 
-function load_chitiet_donhang_admin($id_order){
+function load_chitiet_donhang_admin($id_order)
+{
     $sql = "SELECT * FROM duan1.chitiet_donhang inner join duan1.sanpham on sanpham.id = chitiet_donhang.idpro
     where id_order = $id_order";
     $load_chitiet_donhang_admin = pdo_query($sql);
     return $load_chitiet_donhang_admin;
 }
 
-function load_one_trangthai($id_order){
+function load_one_trangthai($id_order)
+{
     $sql = "SELECT * FROM duan1.donhang where id = $id_order";
     $load_one_trangthai = pdo_query_one($sql);
     return $load_one_trangthai;
 }
-function update_trangthai_donhang($id_order,$id_trangthai_donhang){
+function update_trangthai_donhang($id_order, $id_trangthai_donhang)
+{
     $sql = "UPDATE duan1.donhang set trangthai = '$id_trangthai_donhang' where id = '$id_order';";
     pdo_execute($sql);
 }
@@ -74,18 +78,19 @@ function load_all_donhang_thanhcong()
     trangthai_donhang.*,
     chitiet_donhang.*,
     donhang.id as madonhang,
-    chitiet_donhang.amount as amount_sp_hoadon,
-    chitiet_donhang.price as price_sp_hoadon
+    SUM(chitiet_donhang.amount) as amount_sp_hoadon,
+    SUM(chitiet_donhang.price) as price_sp_hoadon
 
      FROM duan1.donhang
     inner join duan1.chitiet_donhang on donhang.id = chitiet_donhang.id_order
     inner join duan1.trangthai_donhang on donhang.trangthai = trangthai_donhang.id_trangthai
-    inner join duan1.sanpham on chitiet_donhang.idpro = sanpham.id where trangthai = 4 order by donhang.id desc";
+    inner join duan1.sanpham on chitiet_donhang.idpro = sanpham.id where trangthai = 4 group by donhang.id order by donhang.id desc";
     $load_all_donhang_thanhcong = pdo_query($sql);
     return $load_all_donhang_thanhcong;
 }
 
-function load_chitiet_donhang_thanhcong($id_order){
+function load_chitiet_donhang_thanhcong($id_order)
+{
     $sql = "SELECT * FROM duan1.chitiet_donhang inner join duan1.sanpham on sanpham.id = chitiet_donhang.idpro
     where id_order = $id_order";
     $load_chitiet_donhang_admin = pdo_query($sql);

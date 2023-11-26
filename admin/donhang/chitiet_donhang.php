@@ -50,7 +50,7 @@
                                     <td><?= ($key + 1) ?></td>
                                     <td><?= $value['name'] ?></td>
                                     <td><img style="width:100px;height:100px;" src="../upload/<?= $value['img'] ?>" alt=""></td>
-                                    <td><?= $value['price'] ?></td>
+                                    <td><?= $value['price'] - $value['price_saleoff'] ?></td>
                                     <td><?= $value['amount'] ?></td>
                                 </tr>
                         <?php

@@ -22,6 +22,7 @@ $load_sp_giatot = load_sp_giatot();
 // Sử dụng header_home.php nếu đang truy cập trang chủ, ngược lại sử dụng header.php
 $iduser = $_SESSION['success_login'] ?? 0;
 $user_infor = select_user_by_id($iduser);
+// $_SESSION['success_login'] = $iduser;
 // print_r($user_infor);
 $load_cart_view_icon = load_cart_view_icon($iduser);
 // print_r($user_infor);
@@ -471,7 +472,7 @@ if (isset($_GET['act'])) {
 
                         foreach ($data as $value) {
                             extract($value);
-                            insert_chitiet_donhang($id_hoadon, $idpro, $amount, $price);
+                            insert_chitiet_donhang($id_hoadon, $idpro, $amount, $price - $price_saleoff);
                            
                         }
 
@@ -509,20 +510,16 @@ if (isset($_GET['act'])) {
                     $loai_thanhtoan,
                     $id_trangthai = 1
                 );
-
-
                 foreach ($data as $value) {
                     extract($value);
-                    insert_chitiet_donhang($id_hoadon, $idpro, $amount, $price);
+                    insert_chitiet_donhang($id_hoadon, $idpro, $amount, $price - $price_saleoff);
                 }
-
                 include "view/camon.php";
             }
-
             break;
-
-      
-
+            case 'theodoi_donhang':
+                include "view/order/theodoi_donhang.php";
+                break;
         default:
             include 'view/main.php';
             break;
