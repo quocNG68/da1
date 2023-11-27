@@ -38,7 +38,7 @@
             </div>
             <div class="row mt-5">
               <div class="col-12 text-center mt-xl-2">
-                <a class="text-white font-weight-medium">Back to home</a>
+                <a href="../index.php" class="text-white font-weight-medium">Back to home</a>
               </div>
             </div>
             <div class="row mt-5">

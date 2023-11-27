@@ -1,8 +1,8 @@
 <?php
 // thêm danh mục chính
-function adddm($namedm, $filename)
+function adddm($namedm, $filename,$trangthai)
 {
-    $sql = "INSERT INTO duan1.danhmuc (name, img) VALUES ('$namedm', '$filename')";
+    $sql = "INSERT INTO duan1.danhmuc (name, img,trangthai) VALUES ('$namedm', '$filename',$trangthai)";
     pdo_execute($sql);
 }
 // load danh mục chính
@@ -46,8 +46,8 @@ function load_name_danhmuc(){
      return $load_name_danhmuc;
 }
 // hàm update danh mục chính
-function updatedm($id,$namedm,$filename){
-    $sql = "UPDATE duan1.danhmuc SET name = '$namedm',img = '$filename' WHERE id = '$id'";
+function updatedm($id,$namedm,$filename,$trangthai){
+    $sql = "UPDATE duan1.danhmuc SET name = '$namedm',img = '$filename', trangthai = $trangthai WHERE id = '$id'";
     pdo_execute($sql);
 }
 

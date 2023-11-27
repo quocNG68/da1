@@ -74,7 +74,7 @@
                 </div>
                 <div class="form-group">
                     <label for="toggleRadio">Ẩn/Hiện</label>
-                    <input type="checkbox" id="toggleRadio" class="hidden-radio" name="toggleVisibility" checked>
+                    <input name="trangthai" value="1" type="checkbox" id="toggleRadio" class="hidden-radio" name="toggleVisibility" checked>
                     <label for="toggleRadio" class="toggle-label" id="toggleLabel"></label>
                 </div>
 
@@ -83,11 +83,4 @@
             </form>
         </div>
     </div>
-    <script>
-    var checkbox = document.getElementById('toggleRadio');
-    var label = document.getElementById('toggleLabel');
 
-    label.addEventListener('click', function() {
-        checkbox.checked = !checkbox.checked;
-    });
-</script>

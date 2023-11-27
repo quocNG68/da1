@@ -9,29 +9,31 @@
                         <th>id</th>
                         <th>Tên danh mục chính</th>
                         <th>Hình ảnh</th>
+                        <th>Trạng thái</th>
                         <th>Chức năng</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-                    if (is_array($load_all_danhmuc)) {
-                        foreach ($load_all_danhmuc as $value) {
-                            extract($value);
-                            echo '
-                <tr>
-                <td>' . $id . '</td>
-                <td>' . $name . '</td>
-                <td><img width=120px src="../upload/' . $img . '" alt=""></td>
-                <td>
-                <a class="btn btn-primary" href="index.php?act=editdm&id=' . $id . '">Sửa</a>
-                <a onclick = "return xoa()" class="btn btn-danger" href="index.php?act=deletedm&id=' . $id . '">Xóa</a>
-            </td>
-              </tr>
-            
-                ';
-                        }
-                    }
+                    foreach ($load_all_danhmuc as $value) :
+                        extract($value);
+
+
+
                     ?>
+                        <tr>
+                            <td><?= $id ?> </td>
+                            <td><?=  $name ?></td>
+                            <td><img width=120px src="../upload/<?= $img ?>" alt=""></td>
+                            <td><?php echo $trangthai ? 'Hiển thị' : 'Ẩn'  ?></td>
+                            <td>
+                                <a class="btn btn-primary" href="index.php?act=editdm&id=<?= $id ?>">Sửa</a>
+                                <a onclick="return xoa()" class="btn btn-danger" href="index.php?act=deletedm&id=<?= $id ?>">Xóa</a>
+                            </td>
+                        </tr>
+
+
+                    <?php endforeach; ?>
 
 
                 </tbody>
