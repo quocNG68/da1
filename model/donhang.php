@@ -229,3 +229,7 @@ GROUP BY
     $load_all_donhang_4 = pdo_query($sql);
     return $load_all_donhang_4;
 }
+function xoa_donhang_thanhcong($id_order){
+    $sql = "DELETE FROM duan1.donhang where id = $id_order";
+    pdo_execute($sql);
+}

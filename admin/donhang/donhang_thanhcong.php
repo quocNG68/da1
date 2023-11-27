@@ -66,6 +66,7 @@
                                     </td>
                                     <td>
                                         <a href="index.php?act=chitiet_donhang_thanhcong&id_order=<?= $value['id_order'] ?>"><i class="fa-solid fa-calendar-day"></i></a>
+                                        <a href="index.php?act=xoa_donhang_thanhcong&id_order=<?= $value['id_order'] ?>"><i class="fa-solid fa-trash"></i></a>
                                     </td>
 
 

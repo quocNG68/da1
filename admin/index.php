@@ -605,6 +605,13 @@ if (isset($_GET['act'])) {
             }
             include "donhang/chitiet_donhang_thanhcong.php";
             break;
+        case 'xoa_donhang_thanhcong':
+            if(isset($_GET['id_order'])){
+                $id_order = $_GET['id_order'];
+                xoa_donhang_thanhcong($id_order);
+                header("location: index.php?act=donhang_thanhcong");
+            }
+            break;    
 
         default:
             include "home.php";

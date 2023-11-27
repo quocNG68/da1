@@ -56,7 +56,7 @@
                   <td><?= $phone ?></td>
                   <td><?= $role ?></td>
                   <td><a class="btn btn-danger" href="index.php?act=delete_tk&id=<?= $id ?>">Xóa</a>
-                    <a class="btn btn-primary" href="index.php?act=edit_tk&id=<?= $id ?>">Sửa</a>
+                    <a onclick="return xoa()" class="btn btn-primary" href="index.php?act=edit_tk&id=<?= $id ?>">Sửa</a>
                   </td>
                 </tr>
 
@@ -73,3 +73,9 @@
     </div>
 
   </div>
+  <script>
+    function xoa() {
+
+      return confirm('Bạn chắc chắc muốn xóa không');
+    }
+  </script>

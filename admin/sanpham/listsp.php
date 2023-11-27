@@ -111,7 +111,7 @@
                 <td>'.$ngaydang.'</td>
                 <td>
                 <a class="btn btn-primary" href="index.php?act=editsp&id='.$id.'">Sửa</a>
-                <a class="btn btn-danger" href="index.php?act=deletesp&id='.$id.'">Xóa</a>
+                <a onclick = "return xoa()" class="btn btn-danger" href="index.php?act=deletesp&id='.$id.'">Xóa</a>
                 </td>
                 
         
@@ -157,7 +157,12 @@
 
 </div>
 </div>
+<script>
+        function xoa() {
 
+          return confirm('Bạn chắc chắc muốn xóa không');
+        }
+    </script>
 <!-- <script>
       function toggleImages() {
         var imageContainer = document.getElementById("imageContainer");

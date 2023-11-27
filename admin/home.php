@@ -38,7 +38,7 @@
               <div class="row">
                 <div class="col-md-6 mb-4 stretch-card transparent">
                   <div class="card card-tale">
-                    <img style="width:70px;" src="../public/img/icon_khachhang.png" alt="">
+                    <!-- <img style="width:70px;" src="../public/img/icon_khachhang.png" alt=""> -->
                     <div class="card-body">
                       <p class="mb-4">Người dùng</p>
                       <p class="fs-30 mb-2">4006</p>
@@ -50,9 +50,9 @@
                   <div class="card card-dark-blue">
                    
                     <div class="card-body">
-                      <p class="mb-4">Total Bookings</p>
+                      <p class="mb-4">Tổng doanh thu</p>
                       <p class="fs-30 mb-2">61344</p>
-                      <p>22.00% (30 days)</p>
+                      <!-- <p>22.00% (30 days)</p> -->
                     </div>
                   </div>
                 </div>
@@ -61,9 +61,9 @@
                 <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
                   <div class="card card-light-blue">
                     <div class="card-body">
-                      <p class="mb-4">Number of Meetings</p>
+                      <p class="mb-4">Tổng số đơn hàng</p>
                       <p class="fs-30 mb-2">34040</p>
-                      <p>2.00% (30 days)</p>
+                      <!-- <p>2.00% (30 days)</p> -->
                     </div>
                   </div>
                 </div>
