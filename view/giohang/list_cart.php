@@ -12,7 +12,7 @@
 </section>
 <!-- Shoping Cart Section Begin -->
 
-<section class="shoping-cart spad">
+<section class="shoping-cart spad" id="">
     <form action="index.php?act=checkout" id="form__send" method="post">
         <div class="container">
 
@@ -33,65 +33,19 @@
                             </thead>
                             <tbody>
                                 <?php
-                                if (isset($load_all_cart)) {
-                                    foreach ($load_all_cart as $value) {
-                                        // echo "<pre>";
-                                        // print_r($load_all_cart);
-                                        // echo "</pre>";
-                                        extract($value);
-                                        $price1 = $price - $price_saleoff;
-                                        $product_total = $price1 * $amount;
+                                include "view/giohang/order_cart.php";
                                 ?>
-
-                                        <tr>
-                                            <td><input type="checkbox" value="<?= $value['id'] ?>" name="product_carts[]" class="checkbox"></td>
-                                            <?php
-
-                                            ?>
-                                            <td class="shoping__cart__item">
-                                                <img style="width:100px" src="./upload/<?= $img  ?>" alt="">
-                                                <h5><?= $name ?></h5>
-                                            </td>
-                                            <td class="shoping__cart__price">
-                                                <?= number_format($price1, 3, '.', ',').'VNĐ' ?>
-                                                <span style="text-decoration: line-through;font-weight:400;font-size:14px;"><?= number_format($price, 3, '.', ',').'VNĐ' ?></span>
-                                            </td>
-                                            <td class="shoping__cart__quantity">
-                                                <div class="quantity">
-                                                    <div class="pro-qty">
-                                                        <span onclick="updateTotal('<?= $id ?>', '<?= number_format($price1, 3, '.', ',').'VNĐ' ?>', this)">+</span>
-                                                        <input type="text" value="<?= $amount ?>" min="1" class="qty-input" data-id="<?= $id ?>" disabled>
-                                                        <span onclick="updateTotal('<?= $id ?>', '-<?= number_format($price1, 3, '.', ',').'VNĐ' ?>', this)">-</span>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="shoping__cart__total">
-                                                <?= number_format($product_total, 3, '.', ',').'VNĐ' ?>
-                                            </td>
-                                            <td class="shoping__cart__item__close">
-                                                <a href="index.php?act=delete_cart&id=<?= $value['id'] ?>"> <span class="icon_close"></span></a>
-                                            </td>
-                                        </tr>
-
-
-                                <?php
-                                    }
-                                }
-
-                                ?>
-
-
-
-
-
-
                             </tbody>
                         </table>
                     </div>
                     <div class="shoping__cart__checkbox">
                         <input class="btn btn-success" id="check-all" type="button" value="Chọn tất cả">
-                        <button name="delete-all" class="btn btn-danger" id="delete-all">Xóa</button>
-
+                        <button onclick="return confirm_xoa()" name="delete-all" class="btn btn-danger" id="delete-all">Xóa</button>
+                        <script>
+                            function confirm_xoa() {
+                                return confirm('Bạn chắc chắc muốn xóa không');
+                            }
+                        </script>
                         <!-- <input class="btn btn-danger" id="delete-all" type="submit" value="Xóa"> -->
                     </div>
                 </div>
@@ -108,10 +62,6 @@
                     <div class="shoping__continue">
                         <div class="shoping__discount">
                             <h5>Discount Codes</h5>
-                            <!-- <form action="#">
-                             <input type="text" placeholder="Enter your coupon code">
-                             <button type="submit" class="site-btn">APPLY COUPON</button>
-                         </form> -->
                         </div>
                     </div>
                 </div>
@@ -119,9 +69,10 @@
                     <div class="shoping__checkout">
                         <h5>Cart Total</h5>
                         <ul>
-                            <li>Tổng phụ<span id="subtotal">0.00</span></li>
-                            <li>Tổng cộng<span id="total">0.00</span></li>
-                            <button id="muahang" name="muahang">
+                            <li>Tổng phụ<span id="subtotal">0.000</span></li>
+                            <li>Tổng cộng<span id="total">0.000</span></li>
+                          
+                            <button class="primary-btn" id="muahang" name="muahang">
                                 mua hàng
                             </button>
                         </ul>
@@ -133,7 +84,6 @@
 
     </form>
 </section>
-<!-- Shoping Cart Section End -->
 <script>
     let check_all = document.getElementById('check-all');
     let delete_all = document.getElementById('delete-all');
@@ -144,7 +94,7 @@
     let qtyInputs = document.getElementsByClassName('qty-input');
     let form = document.querySelector('#form__send');
 
-   
+
 
     check_all.addEventListener('click', function() {
         const isAnyUnchecked = Array.from(checkbox).some(cb => !cb.checked);
@@ -163,8 +113,8 @@
             }
         }
         const total = subtotal;
-        subtotalElement.innerText = subtotal.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+'VNĐ';
-        totalElement.innerText = total.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+'VNĐ';
+        subtotalElement.innerText = subtotal.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + 'VNĐ';
+        totalElement.innerText = total.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + 'VNĐ';
     }
 
     for (let i = 0; i < checkbox.length; i++) {
@@ -205,13 +155,175 @@
             form.setAttribute('action', 'index.php?act=list_cart');
         }
     });
-    form.addEventListener('submit', function(){
-       if(check_select()==false) {
-        alert('Vui lòng chọn sản phẩm thanh toán');
-        event.preventDefault();
-        return false;
-       } 
-    
-    }
-    );
+    form.addEventListener('submit', function() {
+        if (check_select() == false) {
+            alert('Vui lòng chọn sản phẩm thanh toán');
+            event.preventDefault();
+            return false;
+        }
+
+    });
 </script>
+<!-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script>
+    $(document).ready(function() {
+
+        totalProduct = document.getElementById('totalProduct');
+    });
+
+    function update_quantity(id, currentAmount, action,element) {
+        var soluong = element.parentElement.querySelector('input');
+       var $dongia = element.parentElement.querySelector('#dongia');
+       var thanhtien = element.parentElement.parentElement.parentElement.parentElement
+
+       console.log(thanhtien);
+        // console.log($dongia);
+        // Get the quantity input element
+        var quantityInput = $('input[data-id="' + id + '"]');
+
+        // Check if the input element exists
+        if (quantityInput.length) {
+            // Get the current quantity value
+            var quantityValue = parseInt(quantityInput.val());
+
+            // Update the quantity based on the action
+            if (action === 'increase') {
+                quantityValue++;
+            } else if (action === 'decrease' && quantityValue > 1) {
+                quantityValue--;
+            }
+
+            // Update the input value
+            quantityInput.val(quantityValue);
+            // updateTotalValue(productId, quantity)
+
+            // Make an Ajax call to update the quantity in the database
+            updateQuantityInDatabase(id, quantityValue);
+        }
+    }
+
+    function updateQuantityInDatabase(productId, quantity) {
+        $.ajax({
+            type: 'POST',
+            url: 'view/ajax/update_amount_listcart.php',
+            data: {
+                id: productId,
+                quantity: quantity,
+            },
+            success: function(response) {
+                console.log(response);
+                totalProduct.innerHTML = response;
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    }
+
+    function xoa_cart(id, product_user) {
+        if (confirm("Bạn có đồng ý xóa sản phẩm hay không?")) {
+            // Gửi yêu cầu bằng ajax để cập nhật giỏ hàng
+            $.ajax({
+
+                type: 'POST',
+                url: 'view/ajax/xoa_cart.php',
+                data: {
+                    id: id,
+                    iduser: product_user
+                },
+                success: function(response) {
+                    console.log(response);
+                    // Sau khi cập nhật thành công
+                    if (response.trim() === 'Xóa sản phẩm thành công') {
+                        $.post('view/giohang/order_cart.php', function(data) {
+                            $('#order').html(data);
+                        });
+                    }
+                }
+
+            });
+        }
+    }
+
+
+</script>
+<script>
+    let check_all = document.getElementById('check-all');
+    let delete_all = document.getElementById('delete-all');
+    let checkout_button = document.getElementById('checkout-button'); // Add an ID to your checkout button
+    let checkbox = document.getElementsByClassName('checkbox');
+    let subtotalElement = document.getElementById('subtotal');
+    let totalElement = document.getElementById('total');
+    let qtyInputs = document.getElementsByClassName('qty-input');
+    let form = document.querySelector('#form__send');
+
+
+
+    check_all.addEventListener('click', function() {
+        const isAnyUnchecked = Array.from(checkbox).some(cb => !cb.checked);
+        for (let i = 0; i < checkbox.length; i++) {
+            checkbox[i].checked = isAnyUnchecked;
+        }
+        updateTotalPrice();
+    });
+
+    function updateTotalPrice() {
+        let subtotal = 0;
+        for (let i = 0; i < checkbox.length; i++) {
+            if (checkbox[i].checked) {
+                const productPrice = parseFloat(checkbox[i].closest('tr').querySelector('.shoping__cart__total').innerText.replace('$', '').replace(',', ''));
+                subtotal += productPrice;
+            }
+        }
+        const total = subtotal;
+        subtotalElement.innerText = subtotal.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + 'VNĐ';
+        totalElement.innerText = total.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + 'VNĐ';
+    }
+
+    for (let i = 0; i < checkbox.length; i++) {
+        checkbox[i].addEventListener('change', function() {
+            updateTotalPrice();
+        });
+    }
+
+
+
+
+    function check_select() {
+        for (let i = 0; i < checkbox.length; i++) {
+            if (checkbox[i].checked == true) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    delete_all.addEventListener('click', function() {
+
+    })
+
+
+
+
+
+
+
+    delete_all.addEventListener('click', function() {
+        if (check_select() == false) {
+            alert("Bạn cần chọn ít nhất 1 danh mục để xóa");
+            event.preventDefault(); //Không cho phép kích hoạt sự kiện gửi dữ liệu lên server
+            return false;
+        } else {
+
+            form.setAttribute('action', 'index.php?act=list_cart');
+        }
+    });
+    form.addEventListener('submit', function() {
+        if (check_select() == false) {
+            alert('Vui lòng chọn sản phẩm thanh toán');
+            event.preventDefault();
+            return false;
+        }
+
+    });
+</script> -->

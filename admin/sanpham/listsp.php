@@ -77,31 +77,7 @@
               
                 ';
                 ?>
-              
-<!--           
-                if(isset($load_all_image_mota)){
-                
-                  foreach($load_all_image_mota as $value){
-                  extract($value);
-                  if($id_pro_img == $id){
-                   
-                    echo '
-                    <img width="100px" src="../upload/'.$img_thum.'">';
-                    
-                  }
-                </td><td>'.$mota_short.'</td>
-                <td>'.$mota_long.'</td>
-                <td>'.$luotxem.'</td>
-                <td>
-                '.$tinhtrang.'
-                </td>
-                <td>'.$xuatxu.'</td>
-                <td>'.$trongluong.'</td>
-                <td>'.$soluong.'</td>
-                <td>'.$luotyeuthich.'</td>
-                  }
-                } -->
-             
+
                 <?php
   
                 echo

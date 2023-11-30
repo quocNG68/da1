@@ -45,7 +45,7 @@
             <ul>
                 <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
                 <li class="cart-icon-container">
-                    <a href="index.php?act=list_cart"><i class="fa fa-shopping-bag"></i> <span><?= count($load_cart_view_icon) ?></span></a>
+                    <a href="index.php?act=list_cart"><i class="fa fa-shopping-bag"></i> <span id="totalProduct"><?= isset($load_all_cart)?count($load_all_cart):0 ?></span></a>
                     <i class="fa-solid fa-caret-down"></i>
                     <div class="cart-dropdown">
                         <!-- Nội dung giỏ hàng dropdown ở đây -->

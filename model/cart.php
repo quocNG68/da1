@@ -1,7 +1,7 @@
 <?php
 
-function add_to_cart($iduser,$idpro,$amount,$ngaythem){
-    $sql = "INSERT INTO duan1.giohang (iduser,idpro,amount,ngaythem) values('$iduser','$idpro','$amount','$ngaythem')";
+function  add_to_cart($productId,$product_iduser,$productAmount){
+    $sql = "INSERT INTO duan1.giohang (iduser,idpro,amount) values('$product_iduser','$productId','$productAmount')";
     pdo_execute($sql);
 }
 
@@ -57,5 +57,15 @@ function load_cart_view_icon($iduser){
 
 function del_cart_after_order($id_cart){
     $sql = "DELETE FROM duan1.giohang where id = $id_cart";
+    pdo_execute($sql);
+}
+function load_one_cart($productId){
+    $sql = "SELECT duan1.giohang where id = $productId";
+    $load_one_cart = pdo_query_one($sql);
+    return $load_one_cart;
+}
+
+function update_cart($amount,$cart_id){
+    $sql = "UPDATE duan1.giohang set amount = $amount where id = $cart_id";
     pdo_execute($sql);
 }

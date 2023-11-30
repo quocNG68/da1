@@ -58,134 +58,129 @@
                     $price1 = $price - $price_saleoff;
 
                 ?>
-                    <form action="index.php?act=addtocart" method="post">
-                        <div class="product__details__text">
-                            <h3><?= $name ?></h3>
-                            <div class="product__details__rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-half-o"></i>
-                                <span>(18 reviews)</span>
+
+                    <div class="product__details__text">
+                        <h3><?= $name ?></h3>
+                        <div class="product__details__rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-half-o"></i>
+                            <span>(18 reviews)</span>
+                        </div>
+
+                        <div class="product__details__price">
+                            <h3><?=  number_format($price1,3, '.', ',') ?>VNĐ</h3>
+                            <p>Giá gốc : <?=  number_format($price,3, '.', ',') ?>VNĐ</p>
+                        </div>
+                        <p><?= $mota_short ?></p>
+                        <p style="color: red;" id="errAmount"></p>
+                        <div class="product__details__quantity">
+                            <div class="quantity">
+                                <div class="pro-qty">
+                                    <span style="border:none;outline:none;" type="button" onclick="remote('-')" class="dec qtybtn">-</span>
+                                    <input name="soluong" type="text" class="amount__flex" id="amount__flex" min="1" max="<?= $soluong ?>" value="1">
+                                    <span style="border:none;outline:none;" type="button" onclick="remote('+')" class="inc qtybtn">+</span>
+                                </div>
+                                <script>
+
+                                </script>
                             </div>
 
-                            <div class="product__details__price">
-                                <h3><?= '$' . $price1 . '.00' ?></h3>
-                                <p>Giá gốc : <?= $price ?></p>
-                            </div>
-                            <p><?= $mota_short ?></p>
-                            <p style="color: red;" id="errAmount"></p>
-                            <div class="product__details__quantity">
-                                <div class="quantity">
-                                    <div class="pro-qty">
-                                        <span style="border:none;outline:none;" type="button" onclick="remote('-')" class="dec qtybtn">-</span>
-                                        <input name="soluong" type="text" class="amount__flex" id="amount__flex" min="1" max="<?= $soluong ?>" value="1">
-                                        <span style="border:none;outline:none;" type="button" onclick="remote('+')" class="inc qtybtn">+</span>
-                                    </div>
-                                    <script>
 
-                                    </script>
+
+                        </div>
+                        <?php
+                        if ($tinhtrang == 'Còn hàng') {
+                        ?>
+
+                            <?php
+                            if (isset($_SESSION['success_login'])) {
+                                // extract($_SESSION['success_login']);
+                            }
+                            ?>
+                            <button style="border:none;outline:none;" type="button" onclick="addToCart(<?= $id ?>,<?= $iduser ?> , $('#amount__flex').val())" class="inc qtybtn">Thêm vào giỏ hàng</button>
+                            <!-- Add this div for the success message -->
+                            <div id="successMessage" style="display: none;" class="alert alert-success">Sản phẩm đã được thêm vào giỏ hàng thành công!</div>
+
+                        <?php
+
+
+
+                        }
+
+                        ?>
+
+                        <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
+                        <ul>
+                            <li><b>Tình trạng</b>
+                                <?php if ($tinhtrang == 'Còn hàng') {
+                                ?>
+                                    <span style="color: green;"><?= $tinhtrang ?></span>
+                            </li>
+
+                        <?php
+                                } else {
+                        ?>
+                            <span style="color: red;"><?= $tinhtrang ?></span></li>
+                        <?php
+                                }
+                        ?>
+                        <li><b>Xuất xứ</b> <span><?= $xuatxu ?></span></li>
+                        <li><b>Trọng lượng</b> <span><?= $trongluong ?></span></li>
+                        <li><b>Danh mục</b> <span><?= $tendanhmuc ?></span></li>
+                        </ul>
+                    </div>
+                    </form>
+                <?php
+                }
+                ?>
+            </div>
+            <div class="col-lg-12">
+                <div class="product__details__tab">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab" aria-selected="true">Mô tả</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab" aria-selected="false">Bình luận</a>
+                        </li>
+
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                            <div class="product__details__tab__desc">
+                                <h6>Thông tin sản phẩm</h6>
+                                <p>
+                                    <?= $mota_long; ?>
+                                </p>
+
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tabs-2" role="tabpanel">
+                            <div class="product__details__tab__desc">
+                                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+                                <script>
+                                    $(document).ready(function() {
+                                        $("#comment").load("view/binhluan/binhluan_form.php", {
+                                            idpro: <?= $id ?>
+
+                                        });
+                                    });
+                                </script>
+                                <div class="mb " id="comment">
+
+
                                 </div>
 
-
-
                             </div>
-                            <?php
-                            if ($tinhtrang == 'Còn hàng') {
-                            ?>
-
-                                <?php
-                                if (isset($_SESSION['success_login'])) {
-                                    // extract($_SESSION['success_login']);
-                                }
-                                ?>
-                                <input type="hidden" name="iduser" value="<?= $_SESSION['success_login']['id'] ?>">
-                                <input type="hidden" name="idpro" value="<?= $id ?>">
-                                <input type="hidden" name="date" value="<?= $date ?>"> <!-- Thêm giá trị cho date -->
-                                <button class="btn btn-success" name="addtocart">AddToCart</button>
-                                <!-- Add this div for the success message -->
-                                <div id="successMessage" style="display: none;" class="alert alert-success">Sản phẩm đã được thêm vào giỏ hàng thành công!</div>
-
-                    </form>
-
-                <?php
-
-
-
-                            }
-
-                ?>
-
-                <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
-                <ul>
-                    <li><b>Tình trạng</b>
-                        <?php if ($tinhtrang == 'Còn hàng') {
-                        ?>
-                            <span style="color: green;"><?= $tinhtrang ?></span>
-                    </li>
-
-                <?php
-                        } else {
-                ?>
-                    <span style="color: red;"><?= $tinhtrang ?></span></li>
-                <?php
-                        }
-                ?>
-                <li><b>Xuất xứ</b> <span><?= $xuatxu ?></span></li>
-                <li><b>Trọng lượng</b> <span><?= $trongluong ?></span></li>
-                <li><b>Danh mục</b> <span><?= $tendanhmuc ?></span></li>
-                </ul>
-            </div>
-            </form>
-        <?php
-                }
-        ?>
-        </div>
-        <div class="col-lg-12">
-            <div class="product__details__tab">
-                <ul class="nav nav-tabs" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab" aria-selected="true">Mô tả</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab" aria-selected="false">Bình luận</a>
-                    </li>
-
-                </ul>
-                <div class="tab-content">
-                    <div class="tab-pane active" id="tabs-1" role="tabpanel">
-                        <div class="product__details__tab__desc">
-                            <h6>Thông tin sản phẩm</h6>
-                            <p>
-                                <?= $mota_long; ?>
-                            </p>
-
                         </div>
+
                     </div>
-                    <div class="tab-pane" id="tabs-2" role="tabpanel">
-                        <div class="product__details__tab__desc">
-                            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-                            <script>
-                                $(document).ready(function() {
-                                    $("#comment").load("view/binhluan/binhluan_form.php", {
-                                        idpro: <?= $id ?>
-
-                                    });
-                                });
-                            </script>
-                            <div class="mb " id="comment">
-
-
-                            </div>
-
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </div>
-    </div>
     </div>
 </section>
 
@@ -217,7 +212,7 @@
                             </div>
                             <div class="product__item__text">
                                 <h6><a href="index.php?act=chitietsanpham&id=<?= $id ?>"><?= $name ?></a></h6>
-                                <h5><?= number_format($price1, 2, '.', ','); ?></h5>
+                                <h5><?=  number_format($price1,3, '.', ',')   ?>VNĐ</h5>
                             </div>
                         </div>
                     </div>
@@ -229,8 +224,38 @@
         </div>
     </div>
 </section>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>
-     function showSuccessMessage() {
+    let totalProduct; // declare totalProduct globally
+
+    $(document).ready(function() {
+        totalProduct = document.getElementById('totalProduct');
+    });
+
+    function addToCart(productId, product_iduser, quantity) {
+        $.ajax({
+            type: 'POST',
+            url: 'view/ajax/add_cart_detail.php',
+            data: {
+                id: productId,
+                iduser: product_iduser,
+                quantity: quantity, // Include quantity in the data
+            },
+            success: function(response) {
+                console.log(response);
+                totalProduct.innerHTML = response;
+                alert("Bạn đã thêm vào giỏ hàng thành công");
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    }
+</script>
+
+
+<script>
+    function showSuccessMessage() {
         document.getElementById('successMessage').style.display = 'block';
         // You can customize the display duration or add a close button as needed
         setTimeout(function() {

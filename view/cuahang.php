@@ -11,19 +11,8 @@
            <div class="row">
                <div class="col-lg-3 col-md-5">
                    <div class="sidebar">
-                       <div class="sidebar__item">
-                           <h4>Danh Mục</h4>
-                           <ul>
-                               <?php
-                                foreach ($load_all_danhmuc as $value) {
-                                    extract($value);
-                                    echo '<li><a href="index.php?act=cuahang&iddm=' . $id . '">' . $name . '</a></li>';
-                                }
-                                ?>
 
-                           </ul>
-                       </div>
-                       <div class="sidebar__item">
+                   <div class="sidebar__item">
                            <h4>Khoảng giá</h4>
                            <div class="sidebar__item__size">
                                <form action="index.php?act=cuahang" method="get">
@@ -48,42 +37,43 @@
                            </div>
 
                        </div>
-
                        <div class="sidebar__item">
                            <div class="latest-product__text">
                                <h4>Mới nhất</h4>
-                               <div class="latest-product__slider owl-carousel">
-                                   <?php
-                                    if (isset($load_sp_moinhat)) {
-                                        $productChunks_moinhat = array_chunk($load_sp_moinhat, 3); // Split products into groups of 3
-                                        foreach ($productChunks_moinhat as $productGroup_moinhat) {
-                                            echo '<div class="latest-prdouct__slider__item">';
-                                            foreach ($productGroup_moinhat as $value) {
-                                                extract($value);
-                                                $price1 = $price - $price_saleoff;
-                                                echo '
-                                    <a href="index.php?act=chitietsanpham&id=' . $id . '">
-                                        <div class="latest-product__item">
-                                            <div class="latest-product__item__pic">
-                                                <img style="width:125px;" src="../duan2/upload/' . $img . '" alt="">
-                                            </div>
-                                            <div class="latest-product__item__text">
-                                                <h6>' . $name . '</h6>
-                                                <span>' . number_format($price1, 0, '.', ',') . 'VNĐ</span>
-                                            </div>
-                                        </div>
-                                        </a>
-                                        ';
-                                            }
-                                            echo '</div>';
+                               <?php
+                                if (isset($load_sp_moinhat)) {
+                                    $productChunks_moinhat = array_chunk($load_sp_moinhat, 3); // Split products into groups of 3
+                                    foreach ($productChunks_moinhat as $productGroup_moinhat) {
+                                        echo '<div class="latest-prdouct__slider__item">';
+                                        foreach ($productGroup_moinhat as $value) {
+                                            extract($value);
+                                            $price1 = $price - $price_saleoff;
+                                ?>
+                                           <div class="latest-product__item">
+                                               <div class="latest-product__item__pic">
+                                                   <img style="width:125px;" src="../duan2/upload/<?= $img ?>" alt="">
+                                               </div>
+                                               <div class="latest-product__item__text">
+                                                   <a href="index.php?act=chitietsanpham&id=<?= $id ?>">
+                                                       <h6><?= $name ?></h6>
+                                                   </a>
+                                                   <span><?=  number_format($price1,3, '.', ',') . 'VNĐ' ?></span>
+                                               </div>
+                                           </div>
+                               <?php
                                         }
+                                        echo '</div>'; // Close the latest-prdouct__slider__item div
                                     }
-                                    ?>
-                               </div>
+                                }
+                                ?>
+
+
                            </div>
                        </div>
                    </div>
                </div>
+
+
                <div class="col-lg-9 col-md-7">
                    <div class="product__discount">
                        <div class="section-title product__discount__title">
@@ -105,13 +95,13 @@
                                                    <ul class="product__item__pic__hover">
                                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                                       <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                                       <li><a data-id="<?= $id ?>" onclick="addToCart(<?= $id ?>,<?= $iduser  ?>)"><i class="fa fa-shopping-cart"></i></a></li>
                                                    </ul>
                                                </div>
                                                <div class="product__discount__item__text">
                                                    <span><?= $tendanhmuc ?></span>
                                                    <h5><a href="index.php?act=chitietsanpham&id=<?= $id ?>"><?= $name ?></a></h5>
-                                                   <div class="product__item__price"><?=  number_format($price1, 0, '.', ',').'VNĐ' ?> <span><?= number_format($price, 0, '.', ',').'VNĐ' ?></span></div>
+                                                   <div class="product__item__price"><?=  number_format($price1,3, '.', ',') . 'VNĐ' ?> <span><?=  number_format($price,3, '.', ',') . 'VNĐ' ?></span></div>
                                                </div>
                                            </div>
                                        </div>
@@ -201,12 +191,13 @@
                                            <ul class="product__item__pic__hover">
                                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                               <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+
+                                               <li><a data-id="<?= $id ?>" onclick="addToCart(<?= $id ?>,<?= $iduser  ?>)"><i class="fa fa-shopping-cart"></i></a></li>
                                            </ul>
                                        </div>
                                        <div class="product__item__text">
                                            <h6><a href="index.php?act=chitietsanpham&id=<?= $id ?>"><?= $name ?></a></h6>
-                                           <h5><?= number_format($price1, 2, '.', ',').'VNĐ'; ?></h5>
+                                           <h5><?=  number_format($price1,3, '.', ',') . 'VNĐ'; ?></h5>
                                        </div>
                                    </div>
                                </div>
@@ -245,6 +236,38 @@
 
                </div>
            </div>
+
+       </div>
        </div>
    </section>
    <!-- Product Section End -->
+
+   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+   <script>
+       let totalProduct; // declare totalProduct globally
+
+       $(document).ready(function() {
+           totalProduct = document.getElementById('totalProduct');
+       });
+
+       function addToCart(productId, product_iduser) {
+
+           $.ajax({
+               type: 'POST',
+               url: 'view/ajax/addTocart.php',
+               data: {
+                   id: productId,
+                   iduser: product_iduser,
+
+               },
+               success: function(response) {
+                   console.log(response);
+                   totalProduct.innerHTML = response;
+                   alert("Bạn đã thêm vào giỏ hàng thành công");
+               },
+               error: function(error) {
+                   console.log(error);
+               }
+           });
+       }
+   </script>

@@ -184,67 +184,57 @@
         err_price_saleoff.textContent = '';
       }
 
-      if (image.value === '') {
-        err_image.textContent = 'Vui lòng chọn ảnh';
+      // Check file format
+      var allowedFormats = ['jpg', 'jpeg', 'png', 'gif']; // Add more formats as needed
+      var fileName = image.files[0].name;
+      var fileExtension = fileName.split('.').pop().toLowerCase();
+
+      if (allowedFormats.indexOf(fileExtension) === -1) {
+        err_image.textContent = 'Định dạng tệp không hợp lệ. Vui lòng chọn các định dạng sau: ' + allowedFormats.join(', ');
         err_image.style.color = 'red';
         count++;
       } else {
-        // Check file format
-        var allowedFormats = ['jpg', 'jpeg', 'png', 'gif']; // Add more formats as needed
-        var fileName = image.files[0].name;
-        var fileExtension = fileName.split('.').pop().toLowerCase();
+        // Check file size
+        var imageSize = image.files[0].size; // in bytes
+        var maxSize = 1048576; // 1MB (you can adjust this value as needed)
 
-        if (allowedFormats.indexOf(fileExtension) === -1) {
-          err_image.textContent = 'Định dạng tệp không hợp lệ. Vui lòng chọn các định dạng sau: ' + allowedFormats.join(', ');
+        if (imageSize > maxSize) {
+          err_image.textContent = 'Kích thước ảnh vượt quá giới hạn. Vui lòng chọn ảnh nhỏ hơn ' + maxSize / 1048576 + 'MB';
           err_image.style.color = 'red';
           count++;
         } else {
-          // Check file size
-          var imageSize = image.files[0].size; // in bytes
-          var maxSize = 1048576; // 1MB (you can adjust this value as needed)
-
-          if (imageSize > maxSize) {
-            err_image.textContent = 'Kích thước ảnh vượt quá giới hạn. Vui lòng chọn ảnh nhỏ hơn ' + maxSize / 1048576 + 'MB';
-            err_image.style.color = 'red';
-            count++;
-          } else {
-            err_image.textContent = '';
-          }
+          err_image.textContent = '';
         }
       }
 
 
+
       // Validate Hình ảnh mô tả
       // Validate Hình ảnh mô tả
-      if (images.files.length === 0) {
-        err_images.textContent = 'Vui lòng chọn ít nhất một ảnh mô tả';
-        err_images.style.color = 'red';
-        count++;
-      } else {
-        // Check file formats and sizes for multiple files
-        var allowedFormats = ['jpg', 'jpeg', 'png', 'gif']; // Add more formats as needed
-        var maxSize = 1048576; // 1MB (you can adjust this value as needed)
+      // Check file formats and sizes for multiple files
+      var allowedFormats = ['jpg', 'jpeg', 'png', 'gif']; // Add more formats as needed
+      var maxSize = 1048576; // 1MB (you can adjust this value as needed)
 
-        for (var i = 0; i < images.files.length; i++) {
-          var fileName = images.files[i].name;
-          var fileExtension = fileName.split('.').pop().toLowerCase();
-          var imageSize = images.files[i].size; // in bytes
+      for (var i = 0; i < images.files.length; i++) {
+        var fileName = images.files[i].name;
+        var fileExtension = fileName.split('.').pop().toLowerCase();
+        var imageSize = images.files[i].size; // in bytes
 
-          if (allowedFormats.indexOf(fileExtension) === -1) {
-            err_images.textContent = 'Định dạng tệp không hợp lệ. Vui lòng chọn các định dạng sau: ' + allowedFormats.join(', ');
-            err_images.style.color = 'red';
-            count++;
-            break; // Stop checking further files on the first invalid file
-          } else if (imageSize > maxSize) {
-            err_images.textContent = 'Kích thước ảnh vượt quá giới hạn. Vui lòng chọn ảnh nhỏ hơn ' + maxSize / 1048576 + 'MB';
-            err_images.style.color = 'red';
-            count++;
-            break; // Stop checking further files on the first invalid file
-          } else {
-            err_images.textContent = '';
-          }
+        if (allowedFormats.indexOf(fileExtension) === -1) {
+          err_images.textContent = 'Định dạng tệp không hợp lệ. Vui lòng chọn các định dạng sau: ' + allowedFormats.join(', ');
+          err_images.style.color = 'red';
+          count++;
+          break; // Stop checking further files on the first invalid file
+        } else if (imageSize > maxSize) {
+          err_images.textContent = 'Kích thước ảnh vượt quá giới hạn. Vui lòng chọn ảnh nhỏ hơn ' + maxSize / 1048576 + 'MB';
+          err_images.style.color = 'red';
+          count++;
+          break; // Stop checking further files on the first invalid file
+        } else {
+          err_images.textContent = '';
         }
       }
+
 
       // Validate Mô tả ngắn
       if (mota_short.value === '') {

@@ -55,13 +55,14 @@
                 <ul class="featured__item__pic__hover">
                     <li><a href="#"><i class="fa fa-heart"></i></a></li>
                     <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                    <li><a data-id="<?= $id ?>" onclick="addToCart(<?= $id ?>,<?= $iduser  ?>)"><i class="fa fa-shopping-cart"></i></a></li>
+
                 </ul>
             </div>
          
             <div class="featured__item__text">
                 <h6><a href="index.php?act=chitietsanpham&id=<?= $id ?>"><?= $name ?></a></h6>
-                <h5>$<?= number_format($price1, 2, '.', ',').'VNĐ'; ?></h5>
+                <h5>$<?= number_format($price1,3, '.',',').'VNĐ'; ?></h5>
             </div>
         </div>
     
@@ -121,7 +122,7 @@
                     </div>
                     <div class="latest-product__item__text">
                         <h6>' . $name . '</h6>
-                        <span>' . number_format($price1, 3, '.', ',') . 'VNĐ</span>
+                        <span>' . number_format($price1,3, '.', ',') . 'VNĐ</span>
                     </div>
                 </div>
                 </a>
@@ -155,7 +156,7 @@
                     </div>
                     <div class="latest-product__item__text">
                         <h6>' . $name . '</h6>
-                        <span>' . number_format($price1, 3, '.', ',') . 'VNĐ</span>
+                        <span>' . number_format($price1,3, '.', ',') . 'VNĐ</span>
                     </div>
                 </div>
                 </a>
@@ -190,7 +191,7 @@
                     </div>
                     <div class="latest-product__item__text">
                         <h6>' . $name . '</h6>
-                        <span>' . number_format($price1, 3, '.', ',') . 'VNĐ</span>
+                        <span>' . number_format($price1,3, '.', ',') . 'VNĐ</span>
                     </div>
                 </div>
                 </a>
@@ -208,9 +209,41 @@
         </div>
     </div>
 </section>
-<!-- Latest Product Section End -->
 
-<!-- Blog Section Begin -->
-<!-- <section class="from-blog spad">
-    
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+   <script>
+       let totalProduct; // declare totalProduct globally
+
+       $(document).ready(function() {
+           totalProduct = document.getElementById('totalProduct');
+       });
+
+       function addToCart(productId, product_iduser) {
+
+           $.ajax({
+               type: 'POST',
+               url: 'view/ajax/addTocart.php',
+               data: {
+                   id: productId,
+                   iduser: product_iduser,
+
+               },
+               success: function(response) {
+                   console.log(response);
+                   totalProduct.innerHTML = response;
+                   if(!product_iduser){
+                    alert("Lỗi");
+
+                }else{
+                    
+                    alert("Thành công");
+                   }
+          
+               },
+               error: function(error) {
+                   console.log(error);
+               }
+           });
+       }
+   </script>
 

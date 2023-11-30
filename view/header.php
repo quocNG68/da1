@@ -221,7 +221,7 @@
                         <ul>
                             <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
                             <li class="cart-icon-container">
-                                <a href="index.php?act=list_cart"><i class="fa fa-shopping-bag"></i> <span><?= count($load_cart_view_icon) ?></span></a>
+                                <a href="index.php?act=list_cart"><i class="fa fa-shopping-bag"></i> <span id="totalProduct"><?= isset($load_all_cart)?count($load_all_cart):0 ?></span></a>
                                 <i class="fa-solid fa-caret-down"></i>
                                 <div class="cart-dropdown">
                                     <!-- Nội dung giỏ hàng dropdown ở đây -->
@@ -386,10 +386,6 @@
                         <div class="hero__search__form">
                             <form action="index.php?act=cuahang" method="get" onsubmit="return saveSearchKeyword()">
                                 <input type="hidden" id="act" name="act" value="cuahang">
-                                <!-- <div class="hero__search__categories">
-                                    All Categories
-                                    <span class="arrow_carrot-down"></span>
-                                </div> -->
                                 <input type="hidden" name="page" value="<?= isset($_GET['page']) ? $_GET['page'] : 1 ?>">
                                 <input type="text" placeholder="Bạn cần gì ..." name="keyword" id="searchKeyword">
                                 <button type="submit" name="search" class="site-btn">SEARCH</button>
@@ -431,5 +427,4 @@
             </div>
         </div>
     </section>
-
     <!-- Hero Section End -->

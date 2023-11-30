@@ -23,7 +23,7 @@ $load_sp_giatot = load_sp_giatot();
 $iduser = $_SESSION['success_login'] ?? 0;
 $user_infor = select_user_by_id($iduser);
 $_SESSION['success_login_admin'] = $user_infor;
-
+$load_all_cart = load_all_cart($iduser);
 // $_SESSION['success_login'] = $iduser;
 // print_r($user_infor);
 $load_cart_view_icon = load_cart_view_icon($iduser);
@@ -68,16 +68,11 @@ if (isset($_GET['act'])) {
                 } else {
                     $err_password = '';
                 }
-
-
                 $check_login = check_login($email, $password);
 
                 if ($check) {
                     if (is_array(check_login($email, $password))) {
-                        // echo "<script>alert('thành công nha')</script>";
                         $_SESSION['success_login'] = $check_login['id'];
-                        // echo ($_SESSION['success_login']);
-                        // print_r($_SESSION['success_login']);
                         header("location: index.php?act=home");
                     }
                 }
@@ -94,22 +89,12 @@ if (isset($_GET['act'])) {
                 $email = $_POST['email'];
                 $password = $_POST['password'];
                 $check = true;
-
-                // $check_register = check_register($username,$email);
-
-                // if(check_register($username,'')){
-                //     $err_username = 'Tên đăng nhập đã tồn tại';
-                //     $check = false;
-                // }else{
-                //     $err_username = '';
-                // }
                 if (check_register($email)) {
                     $err_email = 'Email đã tồn tại';
                     $check = false;
                 } else {
                     $err_email = '';
                 }
-                // $check_register = check_register($username,$email);
                 if ($check) {
                     add_taikhoan($username, $email, $password);
                     header("location: index.php?act=login");
@@ -120,7 +105,6 @@ if (isset($_GET['act'])) {
             break;
 
         case 'taikhoan':
-            // print_r($_SESSION['success_login']);
             include 'view/taikhoan/infor_taikhoan.php';
             break;
         case 'edit_infor_user':
@@ -166,7 +150,7 @@ if (isset($_GET['act'])) {
                     header('location:' . $_SERVER['HTTP_REFERER']);
                 }
             }
-            break;
+            break;          
         case 'change_pass':
             if (isset($_POST['changepass_infor_user'])) {
                 $password_old = $_POST['password_old'];
@@ -237,37 +221,9 @@ if (isset($_GET['act'])) {
             }
             include 'view/chitietsanpham.php';
             break;
-        case 'addtocart':
-            if ($_SESSION['success_login']) {
-                if (isset($_POST['addtocart'])) {
-                    // $iduser = $_POST['iduser'];
-                    $idpro = $_POST['idpro']; // Sửa đổi tên biến này
-                    $amount = $_POST['soluong'];
-
-                    date_default_timezone_set('Asia/Ho_Chi_Minh');
-                    $date = date("Y-m-d H:i:s");
-
-                    $stateCheck = checkProCart($idpro);
-                    if ($stateCheck) {
-                        $amount_after_add = $stateCheck['amount'] + $amount;
-                        updateCart($stateCheck['id'], $amount_after_add);
-                    } else {
-
-                        add_to_cart($iduser, $idpro, $amount, $date);
-                    }
-                    echo "<script>alert('Đã thêm sản phẩm thành công')</script>";
-                    // Đảm bảo hàm add_to_cart đã được định nghĩa và chứa logic cần thiết
-                    header("Location: index.php?act=list_cart");
-                }
-            } else {
-                header("Location: index.php?act=login");
-            }
-            break;
         case 'list_cart':
-
             if (isset($_SESSION['success_login'])) {
                 $load_all_cart = load_all_cart($iduser);
-
                 if (isset($_POST['delete-all'])) {
                     $id = $_POST['product_carts'];
                     delete_cart_checkbox($id);
@@ -289,6 +245,7 @@ if (isset($_GET['act'])) {
             }
             break;
         case 'cuahang':
+           
 
             $start = '';
             $end = '';
@@ -438,6 +395,11 @@ if (isset($_GET['act'])) {
             break;
 
         case "camon":
+            $load_all_donhang_1 = load_all_donhang_1($iduser);
+            $load_all_donhang_2 = load_all_donhang_2($iduser);
+            $load_all_donhang_3 = load_all_donhang_3($iduser);
+            $load_all_donhang_4 = load_all_donhang_4($iduser);
+            $load_all_donhang = load_all_donhang($iduser);
             if ($_SESSION['pt_thanhtoan'] == 'online') {
                 if (isset($_GET["vnp_Amount"]) && $_GET['vnp_ResponseCode'] == '00') {
 
@@ -471,7 +433,6 @@ if (isset($_GET['act'])) {
                             $id_trangthai = 1
                         );
                         // insert vào bảng chi tiết đơn hàng
-
                         foreach ($data as $value) {
                             extract($value);
                             insert_chitiet_donhang($id_hoadon, $idpro, $amount, $price - $price_saleoff);
