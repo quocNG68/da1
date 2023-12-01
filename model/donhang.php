@@ -33,14 +33,15 @@ function load_all_donhang_admin()
     chitiet_donhang.*,
     donhang.id as madonhang,
     chitiet_donhang.amount as amount_sp_hoadon,
-    chitiet_donhang.price as price_sp_hoadon
-
+    chitiet_donhang.price as price_sp_hoadon,
+    sum(chitiet_donhang.amount *
+    chitiet_donhang.price) as tongtien
      FROM duan1.donhang 
     inner join duan1.chitiet_donhang on donhang.id = chitiet_donhang.id_order
     inner join duan1.trangthai_donhang on donhang.trangthai = trangthai_donhang.id_trangthai
     inner join duan1.sanpham on chitiet_donhang.idpro = sanpham.id
     where donhang.trangthai in(1,2,3)
-     group by  donhang.id order by donhang.id desc";
+     group by donhang.iduser order by donhang.id desc";
     $load_all_donhang_admin = pdo_query($sql);
     return $load_all_donhang_admin;
 }
@@ -80,9 +81,8 @@ function load_all_donhang_thanhcong()
     trangthai_donhang.*,
     chitiet_donhang.*,
     donhang.id as madonhang,
-    chitiet_donhang.amount as amount_sp_hoadon,
-    chitiet_donhang.price as price_sp_hoadon
-
+    sum(chitiet_donhang.amount *
+    chitiet_donhang.price) as tongtien
      FROM duan1.donhang
     inner join duan1.chitiet_donhang on donhang.id = chitiet_donhang.id_order
     inner join duan1.trangthai_donhang on donhang.trangthai = trangthai_donhang.id_trangthai
@@ -229,7 +229,8 @@ GROUP BY
     $load_all_donhang_4 = pdo_query($sql);
     return $load_all_donhang_4;
 }
-function xoa_donhang_thanhcong($id_order){
+function xoa_donhang_thanhcong($id_order)
+{
     $sql = "DELETE FROM duan1.donhang where id = $id_order";
     pdo_execute($sql);
 }

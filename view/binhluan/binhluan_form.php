@@ -5,9 +5,6 @@ include "../../model/binhluan.php";
 include "../../model/pdo.php";
 $idpro = isset($_REQUEST['idpro']) ? $_REQUEST['idpro'] : null;
 $result_comment = load_comment($idpro);
-
-// Handle the case where idpro is not set, for example, redirect to an error page
-
 ?>
 <!DOCTYPE html>
 <html lang="en">

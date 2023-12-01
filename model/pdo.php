@@ -48,6 +48,23 @@ function pdo_query($sql){
         unset($conn);
     }
 }
+function query($sql){
+    $sql_args=array_slice(func_get_args(),1);
+
+    try{
+        $conn=pdo_get_connection();
+        $stmt=$conn->prepare($sql);
+        $stmt->execute($sql_args);
+        $rows=$stmt->fetchAll();
+        return $rows;
+    }
+    catch(PDOException $e){
+        throw $e;
+    }
+    finally{
+        unset($conn);
+    }
+}
 // truy vấn  1 dữ liệu
 function pdo_query_one($sql){
     $sql_args=array_slice(func_get_args(),1);

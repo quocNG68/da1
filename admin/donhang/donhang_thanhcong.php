@@ -60,7 +60,7 @@
                                     <td><?= $value['ngaymua'] ?></td>
                                     <td><?= $value['phuongthuc_thanhtoan'] ?></td>
 
-                                    <td><?= number_format($value['price_sp_hoadon'] * $value['amount_sp_hoadon'], 0, ',', '.') ?>.000vnd</td>
+                                    <td><?= number_format($value['tongtien'],3, ',', '.') ?>vnđ</td>
                                     <td>
                                         <?= $value['tentrangthai'] ?>
                                     </td>

@@ -150,7 +150,7 @@ if (isset($_GET['act'])) {
                     header('location:' . $_SERVER['HTTP_REFERER']);
                 }
             }
-            break;          
+            break;
         case 'change_pass':
             if (isset($_POST['changepass_infor_user'])) {
                 $password_old = $_POST['password_old'];
@@ -245,7 +245,7 @@ if (isset($_GET['act'])) {
             }
             break;
         case 'cuahang':
-           
+
 
             $start = '';
             $end = '';
@@ -476,7 +476,8 @@ if (isset($_GET['act'])) {
                     extract($value);
                     insert_chitiet_donhang($id_hoadon, $idpro, $amount, $price - $price_saleoff);
                 }
-                include "view/camon.php";
+
+                echo "<script>alert('Cảm ơn bạn đã đặt hàng, tiếp tục mua hàng nhé'); window.location='index.php?act=cuahang';</script>";
             }
             break;
         case 'theodoi_donhang':
