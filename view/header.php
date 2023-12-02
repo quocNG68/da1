@@ -389,8 +389,6 @@
                                 <input type="hidden" name="page" value="<?= isset($_GET['page']) ? $_GET['page'] : 1 ?>">
                                 <input type="text" placeholder="Bạn cần gì ..." name="keyword" id="searchKeyword">
                                 <button type="submit" name="search" class="site-btn">SEARCH</button>
-
-
                             </form>
                             <script>
                                 function saveSearchKeyword() {

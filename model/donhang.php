@@ -41,7 +41,9 @@ function load_all_donhang_admin()
     inner join duan1.trangthai_donhang on donhang.trangthai = trangthai_donhang.id_trangthai
     inner join duan1.sanpham on chitiet_donhang.idpro = sanpham.id
     where donhang.trangthai in(1,2,3)
-     group by donhang.iduser order by donhang.id desc";
+    GROUP BY chitiet_donhang.id_order
+
+    ";
     $load_all_donhang_admin = pdo_query($sql);
     return $load_all_donhang_admin;
 }
@@ -98,41 +100,37 @@ function load_chitiet_donhang_thanhcong($id_order)
     $load_chitiet_donhang_admin = pdo_query($sql);
     return $load_chitiet_donhang_admin;
 }
-// function load_all_donhang($iduser){
-//     $sql = "SELECT * FROM duan1.donhang
-//     inner join duan1.sanpham on 
-//      where iduser = $iduser";
-//     $load_all_donhang = pdo_query($sql);
-//     return $load_all_donhang;
-
-// }
-function load_all_donhang($iduser)
+function load_all_donhang($iduser, $keyword)
 {
     $sql = "SELECT
-    donhang.*,
-    chitiet_donhang.*,
-    trangthai_donhang.*,
-    chitiet_donhang.*,
-    donhang.id as madonhang,
-    sanpham.name,
-    sanpham.img,
-    chitiet_donhang.amount as amount_sp_hoadon,
-    chitiet_donhang.price as price_sp_hoadon
-FROM
-    duan1.donhang
-    INNER JOIN duan1.chitiet_donhang ON donhang.id = chitiet_donhang.id_order
-    INNER JOIN duan1.trangthai_donhang ON donhang.trangthai = trangthai_donhang.id_trangthai
-    INNER JOIN duan1.sanpham ON chitiet_donhang.idpro = sanpham.id
-WHERE
-    donhang.iduser = $iduser
-GROUP BY
-    donhang.id, chitiet_donhang.id_order, trangthai_donhang.id_trangthai, sanpham.id;";
+        donhang.*,
+        chitiet_donhang.*,
+        trangthai_donhang.*,
+        sanpham.name,
+        sanpham.img,
+        chitiet_donhang.amount as amount_sp_hoadon,
+        chitiet_donhang.price as price_sp_hoadon
+    FROM
+        duan1.donhang
+        INNER JOIN duan1.chitiet_donhang ON donhang.id = chitiet_donhang.id_order
+        INNER JOIN duan1.trangthai_donhang ON donhang.trangthai = trangthai_donhang.id_trangthai
+        INNER JOIN duan1.sanpham ON chitiet_donhang.idpro = sanpham.id
+    WHERE
+        donhang.iduser = $iduser";
+
+
+
+if ($keyword!='') {
+    $sql .= ' and sanpham.name like "%' . $keyword . '%"';
+}
+    $sql .= " GROUP BY
+        donhang.id, chitiet_donhang.id_order, trangthai_donhang.id_trangthai, sanpham.id";
+
     $load_all_donhang = pdo_query($sql);
     return $load_all_donhang;
 }
 
-
-function load_all_donhang_1($iduser)
+function load_all_donhang_1($iduser, $keyword)
 {
     $sql = "SELECT
     donhang.*,
@@ -150,13 +148,17 @@ FROM
     INNER JOIN duan1.trangthai_donhang ON donhang.trangthai = trangthai_donhang.id_trangthai
     INNER JOIN duan1.sanpham ON chitiet_donhang.idpro = sanpham.id
 WHERE
-    donhang.iduser = $iduser and donhang.trangthai = 1
-GROUP BY
+    donhang.iduser = $iduser and donhang.trangthai = 1";
+
+if ($keyword!='') {
+    $sql .= ' and sanpham.name like "%' . $keyword . '%"';
+}
+    $sql .= " GROUP BY
     donhang.id, chitiet_donhang.id_order, trangthai_donhang.id_trangthai, sanpham.id;";
     $load_all_donhang_1 = pdo_query($sql);
     return $load_all_donhang_1;
 }
-function load_all_donhang_2($iduser)
+function load_all_donhang_2($iduser, $keyword)
 {
     $sql = "SELECT
     donhang.*,
@@ -174,14 +176,17 @@ FROM
     INNER JOIN duan1.trangthai_donhang ON donhang.trangthai = trangthai_donhang.id_trangthai
     INNER JOIN duan1.sanpham ON chitiet_donhang.idpro = sanpham.id
 WHERE
-    donhang.iduser = $iduser and donhang.trangthai = 2
-GROUP BY
+    donhang.iduser = $iduser and donhang.trangthai = 2";
+    if ($keyword!='') {
+        $sql .= ' and sanpham.name like "%' . $keyword . '%"';
+    }
+    $sql .= " GROUP BY
     donhang.id, chitiet_donhang.id_order, trangthai_donhang.id_trangthai, sanpham.id;";
     $load_all_donhang_2 = pdo_query($sql);
     return $load_all_donhang_2;
 }
 
-function load_all_donhang_3($iduser)
+function load_all_donhang_3($iduser, $keyword)
 {
     $sql = "SELECT
     donhang.*,
@@ -199,13 +204,17 @@ FROM
     INNER JOIN duan1.trangthai_donhang ON donhang.trangthai = trangthai_donhang.id_trangthai
     INNER JOIN duan1.sanpham ON chitiet_donhang.idpro = sanpham.id
 WHERE
-    donhang.iduser = $iduser and donhang.trangthai = 3
-GROUP BY
+    donhang.iduser = $iduser and donhang.trangthai = 3";
+   if ($keyword!='') {
+    $sql .= ' and sanpham.name like "%' . $keyword . '%"';
+}
+
+    $sql .= " GROUP BY
     donhang.id, chitiet_donhang.id_order, trangthai_donhang.id_trangthai, sanpham.id;";
     $load_all_donhang_3 = pdo_query($sql);
     return $load_all_donhang_3;
 }
-function load_all_donhang_4($iduser)
+function load_all_donhang_4($iduser, $keyword)
 {
     $sql = "SELECT
     donhang.*,
@@ -223,9 +232,12 @@ FROM
     INNER JOIN duan1.trangthai_donhang ON donhang.trangthai = trangthai_donhang.id_trangthai
     INNER JOIN duan1.sanpham ON chitiet_donhang.idpro = sanpham.id
 WHERE
-    donhang.iduser = $iduser and donhang.trangthai = 4
-GROUP BY
-    donhang.id, chitiet_donhang.id_order, trangthai_donhang.id_trangthai, sanpham.id;";
+    donhang.iduser = $iduser and donhang.trangthai = 4";
+  if ($keyword!='') {
+    $sql .= ' and sanpham.name like "%' . $keyword . '%"';
+}
+    $sql .= " GROUP BY
+    donhang.id, chitiet_donhang.id_order, trangthai_donhang.id_trangthai, sanpham.id";
     $load_all_donhang_4 = pdo_query($sql);
     return $load_all_donhang_4;
 }

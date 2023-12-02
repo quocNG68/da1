@@ -7,6 +7,7 @@ include "./model/taikhoan.php";
 include "./model/danhmuc.php";
 include "./model/cart.php";
 include "./model/donhang.php";
+include "./model/bill.php";
 include "./model/tinhtrang.php";
 // $load_all_danhmuc = load_all_danhmuc();
 
@@ -33,19 +34,16 @@ $use_home_header = true; // Mặc định sử dụng header_home.php
 if (isset($_GET['act'])) {
     $act = $_GET['act'];
 
-    // Kiểm tra nếu người dùng chọn trang khác (không phải trang chủ)
     if ($act !== 'home') {
         $use_home_header = false;
     }
 }
 
-// Bao gồm header_home.php hoặc header.php dựa trên giá trị của $use_home_header
 if ($use_home_header) {
     include "./view/header_home.php";
 } else {
     include "./view/header.php";
 }
-
 if (isset($_GET['act'])) {
     $act = $_GET['act'];
     switch ($act) {
@@ -97,7 +95,8 @@ if (isset($_GET['act'])) {
                 }
                 if ($check) {
                     add_taikhoan($username, $email, $password);
-                    header("location: index.php?act=login");
+
+                    echo "<script>alert('Đăng kí thành công'); window.location='index.php?act=login';</script>";
                     die;
                 }
             }
@@ -298,11 +297,6 @@ if (isset($_GET['act'])) {
             include 'view/cuahang.php';
             break;
         case 'checkout':
-
-            // $_SESSION['cart'] = $_POST;
-            // print_r($_SESSION['cart']);
-            // exit;
-
             if (isset($_POST['muahang'])) {
                 $data = [];
                 foreach ($_POST['product_carts'] as $cart) {
@@ -395,11 +389,6 @@ if (isset($_GET['act'])) {
             break;
 
         case "camon":
-            $load_all_donhang_1 = load_all_donhang_1($iduser);
-            $load_all_donhang_2 = load_all_donhang_2($iduser);
-            $load_all_donhang_3 = load_all_donhang_3($iduser);
-            $load_all_donhang_4 = load_all_donhang_4($iduser);
-            $load_all_donhang = load_all_donhang($iduser);
             if ($_SESSION['pt_thanhtoan'] == 'online') {
                 if (isset($_GET["vnp_Amount"]) && $_GET['vnp_ResponseCode'] == '00') {
 
@@ -476,16 +465,30 @@ if (isset($_GET['act'])) {
                     extract($value);
                     insert_chitiet_donhang($id_hoadon, $idpro, $amount, $price - $price_saleoff);
                 }
-
-                echo "<script>alert('Cảm ơn bạn đã đặt hàng, tiếp tục mua hàng nhé'); window.location='index.php?act=cuahang';</script>";
+                header("location: index.php?act=camon_final&id_hoadon=$id_hoadon");
             }
             break;
+        case 'camon_final':
+            if (isset($_GET['id_hoadon'])) {
+                $id_hoadon = $_GET['id_hoadon'];
+                $load_bill_after_buy = load_bill_after_buy($id_hoadon);
+                $load_bill_detail = load_bill_detail($id_hoadon);
+            }
+            include "view/camon.php";
+            break;
         case 'theodoi_donhang':
-            $load_all_donhang_1 = load_all_donhang_1($iduser);
-            $load_all_donhang_2 = load_all_donhang_2($iduser);
-            $load_all_donhang_3 = load_all_donhang_3($iduser);
-            $load_all_donhang_4 = load_all_donhang_4($iduser);
-            $load_all_donhang = load_all_donhang($iduser);
+            
+            if (isset($_POST['search_order'])) {
+                $keyword = $_POST['keyword'];
+            }else{
+                $keyword = '';
+            }
+            $load_all_donhang = load_all_donhang($iduser,$keyword);
+            $load_all_donhang_1 = load_all_donhang_1($iduser, $keyword);
+            $load_all_donhang_2 = load_all_donhang_2($iduser, $keyword);
+            $load_all_donhang_3 = load_all_donhang_3($iduser, $keyword);
+            $load_all_donhang_4 = load_all_donhang_4($iduser, $keyword);
+           
             include "view/order/theodoi_donhang.php";
             break;
         default:

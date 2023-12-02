@@ -160,9 +160,11 @@
         align-items: center;
         /* Center the content vertically */
     }
-.infor_item p {
-    width: 90%;
-}
+
+    .infor_item p {
+        width: 90%;
+    }
+
     .row-top_title-infor li .count {
         border-radius: 50%;
         /* Make it a circle */
@@ -203,8 +205,13 @@
     </div>
 </section>
 <!-- Breadcrumb Section End -->
+
 <section style="margin: 16px;" class="status_order">
     <div style="width: 900px;" class="container">
+        <form style="text-align: right; margin:8px 0;" action="index.php?act=theodoi_donhang" method="POST">
+            <input style="padding: 5px; border-radius:3px;border:1px solid #7fad39;" type="text" name="keyword" placeholder="Tìm kiếm đơn hàng ...">
+            <button style="background:#7fad39; padding: 5px; border-radius:3px;border:1px solid #7fad39;color:white" name="search_order">Tìm kiếm</button>
+        </form>
         <div class="row">
             <div class="col-lg-12">
                 <div class="row-top_title">
@@ -315,7 +322,7 @@
                                             <p class="infor_item-center_method">Phương thức thanh toán: <?= $value['phuongthuc_thanhtoan'] ?></p>
                                             <p class="infor_item-center_madonhang">Mã đơn hàng: <?= $value['ma_don_hang'] ?></p>
                                             <p class="infor_item-center_madonhang">Người nhận: <?= $value['nguoinhan'] ?><br><?= $value['phone_nguoinhan'] ?><br><?= $value['diachi_nguoinhan'] ?></p>
-                                            
+
                                         </div>
 
 
@@ -323,7 +330,7 @@
                                             <p class="status"><?= $value['tentrangthai'] ?></p>
                                             <div class="price">
                                                 <!-- <p class="price__old">128.000vnd</p> -->
-                                                <p class="price__new"><?= number_format($value['price'],3, ',', '.') ?>VNĐ</p>
+                                                <p class="price__new"><?= number_format($value['price'], 3, ',', '.') ?>VNĐ</p>
 
                                             </div>
                                         </div>
@@ -333,7 +340,7 @@
                                         <div></div>
                                         <div class="thanhtien_item">
 
-                                            <p>Thành tiền: <?= number_format($value['price_sp_hoadon'] * $value['amount_sp_hoadon'],3, ',', '.') ?>VNĐ</p>
+                                            <p>Thành tiền: <?= number_format($value['price_sp_hoadon'] * $value['amount_sp_hoadon'], 3, ',', '.') ?>VNĐ</p>
 
                                         </div>
                                     </div>
@@ -365,7 +372,7 @@
                                         <div class="infor_item-left">
                                             <img style="width:100px;height:100px" src="./upload/<?= $value['img'] ?>" alt="">
                                             <div class="infor_item">
-                                            <p>Đã mua ngày: <?= $value['ngaymua'] ?></p>
+                                                <p>Đã mua ngày: <?= $value['ngaymua'] ?></p>
                                                 <span><?= $value['name'] ?></span>
                                                 <br>
                                                 <span>x<?= $value['amount_sp_hoadon'] ?></span>
@@ -383,7 +390,7 @@
                                             <p class="status"><?= $value['tentrangthai'] ?></p>
                                             <div class="price">
                                                 <!-- <p class="price__old">128.000vnd</p> -->
-                                                <p class="price__new"><?= number_format($value['price'],3, ',', '.') ?>VNĐ</p>
+                                                <p class="price__new"><?= number_format($value['price'], 3, ',', '.') ?>VNĐ</p>
 
                                             </div>
                                         </div>
@@ -392,7 +399,7 @@
                                     <div class="thanhtien">
                                         <div></div>
                                         <div class="thanhtien_item">
-                                        <p>Thành tiền: <?= number_format($value['price_sp_hoadon'] * $value['amount_sp_hoadon'],3, ',', '.') ?>VNĐ</p>
+                                            <p>Thành tiền: <?= number_format($value['price_sp_hoadon'] * $value['amount_sp_hoadon'], 3, ',', '.') ?>VNĐ</p>
                                         </div>
                                     </div>
                                 </div>
@@ -423,7 +430,7 @@
                                         <div class="infor_item-left">
                                             <img style="width:100px;height:100px" src="./upload/<?= $value['img'] ?>" alt="">
                                             <div class="infor_item">
-                                            <p>Đã mua ngày: <?= $value['ngaymua'] ?></p>
+                                                <p>Đã mua ngày: <?= $value['ngaymua'] ?></p>
                                                 <span><?= $value['name'] ?></span>
                                                 <br>
                                                 <span>x<?= $value['amount_sp_hoadon'] ?></span>
@@ -441,7 +448,7 @@
                                             <p class="status"><?= $value['tentrangthai'] ?></p>
                                             <div class="price">
                                                 <!-- <p class="price__old">128.000vnd</p> -->
-                                                <p class="price__new"><?= number_format($value['price'],3, ',', '.') ?>VNĐ</p>
+                                                <p class="price__new"><?= number_format($value['price'], 3, ',', '.') ?>VNĐ</p>
 
                                             </div>
                                         </div>
@@ -450,7 +457,7 @@
                                     <div class="thanhtien">
                                         <div></div>
                                         <div class="thanhtien_item">
-                                        <p>Thành tiền: <?= number_format($value['price_sp_hoadon'] * $value['amount_sp_hoadon'],3, ',', '.') ?>VNĐ </p>
+                                            <p>Thành tiền: <?= number_format($value['price_sp_hoadon'] * $value['amount_sp_hoadon'], 3, ',', '.') ?>VNĐ </p>
                                         </div>
                                     </div>
                                 </div>
@@ -481,7 +488,7 @@
                                         <div class="infor_item-left">
                                             <img style="width:100px;height:100px" src="./upload/<?= $value['img'] ?>" alt="">
                                             <div class="infor_item">
-                                            <p>Đã mua ngày: <?= $value['ngaymua'] ?></p>
+                                                <p>Đã mua ngày: <?= $value['ngaymua'] ?></p>
                                                 <span><?= $value['name'] ?></span>
                                                 <br>
                                                 <span>x<?= $value['amount_sp_hoadon'] ?></span>
@@ -499,7 +506,7 @@
                                             <p class="status"><?= $value['tentrangthai'] ?></p>
                                             <div class="price">
                                                 <!-- <p class="price__old">128.000vnd</p> -->
-                                                <p class="price__new"><?= number_format($value['price'],3, ',', '.') ?>VNĐ</p>
+                                                <p class="price__new"><?= number_format($value['price'], 3, ',', '.') ?>VNĐ</p>
 
                                             </div>
                                         </div>
@@ -508,7 +515,7 @@
                                     <div class="thanhtien">
                                         <div></div>
                                         <div class="thanhtien_item">
-                                        <p>Thành tiền: <?= number_format($value['price_sp_hoadon'] * $value['amount_sp_hoadon'],3, ',', '.') ?>VNĐ </p>
+                                            <p>Thành tiền: <?= number_format($value['price_sp_hoadon'] * $value['amount_sp_hoadon'], 3, ',', '.') ?>VNĐ </p>
                                         </div>
                                     </div>
                                 </div>
@@ -539,7 +546,7 @@
                                         <div class="infor_item-left">
                                             <img style="width:100px;height:100px" src="./upload/<?= $value['img'] ?>" alt="">
                                             <div class="infor_item">
-                                            <p>Đã mua ngày: <?= $value['ngaymua'] ?></p>
+                                                <p>Đã mua ngày: <?= $value['ngaymua'] ?></p>
                                                 <span><?= $value['name'] ?></span>
                                                 <br>
                                                 <span>x<?= $value['amount_sp_hoadon'] ?></span>
@@ -566,7 +573,7 @@
                                     <div class="thanhtien">
                                         <div></div>
                                         <div class="thanhtien_item">
-                                        <p>Thành tiền: <?= number_format($value['price_sp_hoadon'] * $value['amount_sp_hoadon'],3, ',', '.') ?>.VNĐ </p>
+                                            <p>Thành tiền: <?= number_format($value['price_sp_hoadon'] * $value['amount_sp_hoadon'], 3, ',', '.') ?>.VNĐ </p>
                                         </div>
                                     </div>
                                 </div>

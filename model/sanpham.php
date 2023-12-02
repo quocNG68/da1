@@ -112,12 +112,6 @@ function search_sanpham_keyword_view($iddm, $keyword, $start_record, $records_pe
     if($start!=''&& $end!=''){
         $sql.= " AND (sanpham.price - sanpham.price_saleoff) >= $start AND sanpham.price <=$end" ;
     }
-//    if ($start > 0) {
-//        /* $sql .= ' AND (sanpham.price - sanpham.price_saleoff) BETWEEN ' . $start . ' AND ' . $end;*/
-//        $sql .= ' AND (sanpham.price - sanpham.price_saleoff) >= '.$start;
-//        $sql .= ' AND (sanpham.price - sanpham.price_saleoff) <= '.$end;
-//     }
-
     if ($sorting === 'asc') {
         $sql .= ' ORDER BY (sanpham.price - sanpham.price_saleoff) ASC';
     } elseif ($sorting === 'desc') {

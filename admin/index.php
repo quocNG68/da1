@@ -43,6 +43,7 @@ if (isset($_GET['act'])) {
             $result_filter['so_donhang'] = $so_donhang;
             $result_filter['doanhthu'] = $doanhthu;
             $result_filter = json_encode($result_filter);
+            
             if (isset($_POST['filter'])) {
                 $date_start = $_POST['date_start'];
                 $date_end = $_POST['date_end'];
@@ -66,6 +67,7 @@ if (isset($_GET['act'])) {
                 $result_filter['doanhthu'] = $doanhthu;
                 $result_filter = json_encode($result_filter);
             }
+            $thongke_danhmuc = thongke_danhmuc();
             include "home.php";
             break;
         case 'add_tk':

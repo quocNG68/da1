@@ -145,8 +145,6 @@ function checkemailPass($email,$user,$pass) {
         echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
     }
 }
-
-
 function select_user_by_id($iduser){
     $sql = "SELECT * FROM duan1.user where id = $iduser";
     $select_user_by_id = pdo_query_one($sql);

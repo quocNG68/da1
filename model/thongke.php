@@ -15,7 +15,24 @@ function thongke_doanhthu(){
     $thongke_doanhthu = pdo_query($sql);
     return $thongke_doanhthu;
 }
-
+function thongke_danhmuc()
+{
+    $sql = "
+    select
+    danhmuc.id as madanhmuc,
+    danhmuc.name as tendanhmuc,
+    count(sanpham.id) as soluong_sp,
+    max(sanpham.price) as maxprice,
+    min(sanpham.price) as minprice,
+    avg(sanpham.price) as avgprice
+    from duan1.sanpham inner join duan1.danhmuc
+    on sanpham.iddm = danhmuc.id
+    group by danhmuc.id 
+    order by danhmuc.id desc
+    ";
+    $thongke_danhmuc = pdo_query($sql);
+    return $thongke_danhmuc;
+}
 function so_donhang_thanhcong(){
     $sql = "SELECT count(id)as so_donhang_thanhcong FROM duan1.donhang WHERE trangthai=4";
     $so_donhang_thanhcong = pdo_query($sql);

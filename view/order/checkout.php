@@ -34,7 +34,7 @@
 
                         <div class="checkout__input__checkbox">
                             <label for="pay-on-delivery">
-                                <input type="radio" id="pay-on-delivery" value="tienmat" name="payment-method">
+                                <input type="radio" id="pay-on-delivery" value="tienmat" name="payment-method" checked>
                                 Thanh toán khi nhận hàng
                             </label>
 

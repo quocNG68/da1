@@ -11,7 +11,7 @@ function statistical($date_start,$date_end,$type='date'){
     ";
     $sql.=" SELECT ".($type == 'MONTH' ? "DATE_FORMAT(dates.date, '%Y-%m')" : "$type(dates.date)")." AS date, COUNT(DISTINCT donhang.id) AS so_donhang, SUM((chitiet_donhang.amount * chitiet_donhang.price)) AS doanhthu
     FROM dates
-    LEFT JOIN donhang ON DATE(donhang.ngaymua) = DATE(dates.date)
+    LEFT JOIN donhang ON DATE(donhang.ngaymua) = DATE(dates.date) and donhang.trangthai = 4
     LEFT JOIN chitiet_donhang ON chitiet_donhang.id_order=donhang.id
     GROUP BY $type(dates.date)";
     return query($sql);
