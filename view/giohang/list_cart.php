@@ -71,7 +71,7 @@
                         <ul>
                             <li>Tổng phụ<span id="subtotal">0.000</span></li>
                             <li>Tổng cộng<span id="total">0.000</span></li>
-                          
+
                             <button class="primary-btn" id="muahang" name="muahang">
                                 mua hàng
                             </button>
@@ -122,10 +122,6 @@
             updateTotalPrice();
         });
     }
-
-
-
-
     function check_select() {
         for (let i = 0; i < checkbox.length; i++) {
             if (checkbox[i].checked == true) {
@@ -138,17 +134,10 @@
     delete_all.addEventListener('click', function() {
 
     })
-
-
-
-
-
-
-
     delete_all.addEventListener('click', function() {
         if (check_select() == false) {
             alert("Bạn cần chọn ít nhất 1 danh mục để xóa");
-            event.preventDefault(); //Không cho phép kích hoạt sự kiện gửi dữ liệu lên server
+            event.preventDefault();
             return false;
         } else {
 
@@ -164,166 +153,3 @@
 
     });
 </script>
-<!-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script>
-    $(document).ready(function() {
-
-        totalProduct = document.getElementById('totalProduct');
-    });
-
-    function update_quantity(id, currentAmount, action,element) {
-        var soluong = element.parentElement.querySelector('input');
-       var $dongia = element.parentElement.querySelector('#dongia');
-       var thanhtien = element.parentElement.parentElement.parentElement.parentElement
-
-       console.log(thanhtien);
-        // console.log($dongia);
-        // Get the quantity input element
-        var quantityInput = $('input[data-id="' + id + '"]');
-
-        // Check if the input element exists
-        if (quantityInput.length) {
-            // Get the current quantity value
-            var quantityValue = parseInt(quantityInput.val());
-
-            // Update the quantity based on the action
-            if (action === 'increase') {
-                quantityValue++;
-            } else if (action === 'decrease' && quantityValue > 1) {
-                quantityValue--;
-            }
-
-            // Update the input value
-            quantityInput.val(quantityValue);
-            // updateTotalValue(productId, quantity)
-
-            // Make an Ajax call to update the quantity in the database
-            updateQuantityInDatabase(id, quantityValue);
-        }
-    }
-
-    function updateQuantityInDatabase(productId, quantity) {
-        $.ajax({
-            type: 'POST',
-            url: 'view/ajax/update_amount_listcart.php',
-            data: {
-                id: productId,
-                quantity: quantity,
-            },
-            success: function(response) {
-                console.log(response);
-                totalProduct.innerHTML = response;
-            },
-            error: function(error) {
-                console.log(error);
-            }
-        });
-    }
-
-    function xoa_cart(id, product_user) {
-        if (confirm("Bạn có đồng ý xóa sản phẩm hay không?")) {
-            // Gửi yêu cầu bằng ajax để cập nhật giỏ hàng
-            $.ajax({
-
-                type: 'POST',
-                url: 'view/ajax/xoa_cart.php',
-                data: {
-                    id: id,
-                    iduser: product_user
-                },
-                success: function(response) {
-                    console.log(response);
-                    // Sau khi cập nhật thành công
-                    if (response.trim() === 'Xóa sản phẩm thành công') {
-                        $.post('view/giohang/order_cart.php', function(data) {
-                            $('#order').html(data);
-                        });
-                    }
-                }
-
-            });
-        }
-    }
-
-
-</script>
-<script>
-    let check_all = document.getElementById('check-all');
-    let delete_all = document.getElementById('delete-all');
-    let checkout_button = document.getElementById('checkout-button'); // Add an ID to your checkout button
-    let checkbox = document.getElementsByClassName('checkbox');
-    let subtotalElement = document.getElementById('subtotal');
-    let totalElement = document.getElementById('total');
-    let qtyInputs = document.getElementsByClassName('qty-input');
-    let form = document.querySelector('#form__send');
-
-
-
-    check_all.addEventListener('click', function() {
-        const isAnyUnchecked = Array.from(checkbox).some(cb => !cb.checked);
-        for (let i = 0; i < checkbox.length; i++) {
-            checkbox[i].checked = isAnyUnchecked;
-        }
-        updateTotalPrice();
-    });
-
-    function updateTotalPrice() {
-        let subtotal = 0;
-        for (let i = 0; i < checkbox.length; i++) {
-            if (checkbox[i].checked) {
-                const productPrice = parseFloat(checkbox[i].closest('tr').querySelector('.shoping__cart__total').innerText.replace('$', '').replace(',', ''));
-                subtotal += productPrice;
-            }
-        }
-        const total = subtotal;
-        subtotalElement.innerText = subtotal.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + 'VNĐ';
-        totalElement.innerText = total.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + 'VNĐ';
-    }
-
-    for (let i = 0; i < checkbox.length; i++) {
-        checkbox[i].addEventListener('change', function() {
-            updateTotalPrice();
-        });
-    }
-
-
-
-
-    function check_select() {
-        for (let i = 0; i < checkbox.length; i++) {
-            if (checkbox[i].checked == true) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    delete_all.addEventListener('click', function() {
-
-    })
-
-
-
-
-
-
-
-    delete_all.addEventListener('click', function() {
-        if (check_select() == false) {
-            alert("Bạn cần chọn ít nhất 1 danh mục để xóa");
-            event.preventDefault(); //Không cho phép kích hoạt sự kiện gửi dữ liệu lên server
-            return false;
-        } else {
-
-            form.setAttribute('action', 'index.php?act=list_cart');
-        }
-    });
-    form.addEventListener('submit', function() {
-        if (check_select() == false) {
-            alert('Vui lòng chọn sản phẩm thanh toán');
-            event.preventDefault();
-            return false;
-        }
-
-    });
-</script> -->

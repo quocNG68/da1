@@ -273,7 +273,7 @@ if (isset($_GET['act'])) {
                 $keyword = '';
             }
 
-            $records_per_page = 5;
+            $records_per_page = 6;
             $page = isset($_GET['page']) ? $_GET['page'] : 1;
             $start_record = ($page - 1) * $records_per_page;
 
@@ -369,7 +369,7 @@ if (isset($_GET['act'])) {
                     $returnData = array(
                         'code' => '00', 'message' => 'success', 'data' => $vnp_Url
                     );
-                    if (isset($_POST['thanhtoan']) && isset($_POST['payment-method']) == 'online') {
+                    if (isset($_POST['thanhtoan']) && $_POST['payment-method'] == 'online') {
                         header('Location: ' . $vnp_Url);
                         die();
                     } else {
@@ -435,7 +435,7 @@ if (isset($_GET['act'])) {
                         $vnp_PayDate = $_GET["vnp_PayDate"];
                         $vnp_TmnCode = $_GET["vnp_TmnCode"];
                         $vnp_TransactionNo = $_GET["vnp_TransactionNo"];
-                        include "view/camon.php";
+                        header("location: index.php?act=camon_final&id_hoadon=$id_hoadon");
                     }
                 } else {
                     // thông báo nếu không thanh toán thành công

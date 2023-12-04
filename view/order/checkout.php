@@ -39,7 +39,7 @@
                             </label>
 
                             <label for="pay-online" class="pay_online">
-                                <input type="radio" id="pay-online" value="online" name="payment-method">
+                                <input type="radio" id="pay-online" value="online" name="payment-method" >
                                 Thanh toán online
                             </label>
                         </div>

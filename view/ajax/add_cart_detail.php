@@ -6,7 +6,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $productId = $_POST['id'];
     $product_iduser = $_POST['iduser'];
     $productAmount = $_POST['quantity'];
-
     $load_all_cart = load_all_cart($product_iduser);
 
     // Check if the product is already in the cart
