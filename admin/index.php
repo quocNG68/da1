@@ -21,12 +21,17 @@ $so_donhang_thanhcong = so_donhang_thanhcong();
 $thongke_so_nguoidung = thongke_so_nguoidung();
 $thong_ke_donhang_dadat = thong_ke_donhang_dadat();
 $thong_ke_product_bestseller = thong_ke_product_bestseller();
-
-if (isset($_GET['act'])) {
+$_GET['act']=$_GET['act']??'home';
     $act = $_GET['act'];
     switch ($act) {
         case 'home':
-            $result_filter =  statistical($date_start ?? "2023-11-01", $date_end ?? "2023-11-30", $type ?? "date");
+            $result_filter =  statistical(date('Y-m-d',time()-(86400*7)),date('Y-m-d',time()));
+            if (isset($_POST['filter'])) {
+                $date_start = $_POST['date_start'];
+                $date_end = $_POST['date_end'];
+                $type = $_POST['type'];
+                $result_filter =  statistical($date_start, $date_end, $type);
+            }
             foreach ($result_filter as $key => $value) {
                 if ($value['so_donhang'] == null) {
                     $result_filter[$key]['so_donhang'] = 0;
@@ -43,30 +48,7 @@ if (isset($_GET['act'])) {
             $result_filter['so_donhang'] = $so_donhang;
             $result_filter['doanhthu'] = $doanhthu;
             $result_filter = json_encode($result_filter);
-            
-            if (isset($_POST['filter'])) {
-                $date_start = $_POST['date_start'];
-                $date_end = $_POST['date_end'];
-                $type = $_POST['type'];
-                $result_filter =  statistical($date_start, $date_end, $type );
 
-                foreach ($result_filter as $key => $value) {
-                    if ($value['so_donhang'] == null) {
-                        $result_filter[$key]['so_donhang'] = 0;
-                    }
-                    if ($value['doanhthu'] == null) {
-                        $result_filter[$key]['doanhthu'] = 0;
-                    }
-                }
-                $date = array_column($result_filter, 'date');
-                $so_donhang = array_column($result_filter, 'so_donhang');
-                $doanhthu = array_column($result_filter, 'doanhthu');
-                $result_filter = [];
-                $result_filter['date'] = $date;
-                $result_filter['so_donhang'] = $so_donhang;
-                $result_filter['doanhthu'] = $doanhthu;
-                $result_filter = json_encode($result_filter);
-            }
             $thongke_danhmuc = thongke_danhmuc();
             include "home.php";
             break;
@@ -536,13 +518,9 @@ if (isset($_GET['act'])) {
                 header("location: index.php?act=donhang_thanhcong");
             }
             break;
-
-
         default:
             include "home.php";
             break;
     }
-} else {
-    include "home.php";
-};
+   
 include "footer.php";
